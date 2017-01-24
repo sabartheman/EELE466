@@ -22,28 +22,31 @@ architecture bit_ripple_arch of bit_ripple is
 
 	end component;
 
-	signal S1,S2,S3,S4,S5,S6,S7,S8	:std_logic;
 	signal C1,C2,C3,C4,C5,C6,C7,C8	:std_logic;
 	signal X1,X2,X3,X4,X5,X6,X7,X8	:std_logic;
 
 begin
 
-	
+	X1 <= B(0) XOR sub;
+	x2 <= B(1) XOR sub;
+	X3 <= B(2) XOR sub;
+	X4 <= B(3) XOR sub;
+	X5 <= B(4) XOR sub;
+	X6 <= B(5) XOR sub;
+	X7 <= B(6) XOR sub;
+	X8 <= B(7) XOR sub;
 
 
 
-	A0 : full_adder port map(A(0),B(0),sub,S1,C1);
-	A0 : full_adder port map(A(1),B(1),C1,S2,C2);
-	A0 : full_adder port map(A(2),B(2),C2,S3,C3);
-	A0 : full_adder port map(A(3),B(3),C3,S4,C4);
-	A0 : full_adder port map(A(4),B(4),C4,S5,C5);
-	A0 : full_adder port map(A(5),B(5),C5,S6,C6);
-	A0 : full_adder port map(A(6),B(6),C6,S7,C7);
-	A0 : full_adder port map(A(7),B(7),C7,S8,C8);
+	A0 : full_adder port map(A(0),X1,sub,S1,C1);
+	A1 : full_adder port map(A(1),X2,C1,S2,C2);
+	A2 : full_adder port map(A(2),X3,C2,S3,C3);
+	A3 : full_adder port map(A(3),X4,C3,S4,C4);
+	A4 : full_adder port map(A(4),X5,C4,S5,C5);
+	A5 : full_adder port map(A(5),X6,C5,S6,C6);
+	A6 : full_adder port map(A(6),X7,C6,S7,C7);
+	A7 : full_adder port map(A(7),X8,C7,S8,C8);
 
-	
-
-	S <= S1 & S2 & S3 & S4 & S5 & S6 & S7 & S8;		--sumation of the 8 bit adder
 	Cout <= c8;
 
 
