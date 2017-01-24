@@ -14,8 +14,7 @@ architecture full_adder_arch of full_adder is
 
 begin
 
-s    = (A xor B) xor Cin;
-Cout = (A and B) OR (B AND C) OR (A AND C);
+s    <= (A xor B) xor Cin;
+Cout <= (A and B) OR (B AND Cin) OR (A AND Cin);
 
 end architecture;
-
