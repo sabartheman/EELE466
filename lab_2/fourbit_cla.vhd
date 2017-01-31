@@ -41,6 +41,6 @@ begin
 	A2 : cla_bottom_adder port map(A(2),B(2),C2,Sum(2),P(2),G(2),Cd);
 	A3 : cla_bottom_adder port map(A(3),B(3),C3,Sum(3),P(3),G(3),Cout);
 	
-	Cout <= '0';
+	
 
 end architecture;
