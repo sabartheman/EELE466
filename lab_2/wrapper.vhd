@@ -44,6 +44,6 @@ begin
         end if;
     end process;
 
-    A1 : eightbit_cla port map(A,B,S(0),Sum,Carryout);
+    A1 : eightbit_cla port map(A,B,'0',S(0),Sum,Carryout);
 
 end architecture;
