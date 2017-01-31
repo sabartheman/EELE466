@@ -4,7 +4,7 @@ use ieee.std_logic_1164.all;
 
 entity cla_bottom_adder is
 	port(A,B,Cin	:in  std_logic;
-		Sum,P,G 	:out std_logic);
+		Sum,P,G,Cout 	:out std_logic);
 
 end entity;
 
@@ -18,5 +18,7 @@ begin
 	Sum <= (A XOR B XOR Cin);
 	P 	<= (A OR B);
 	G 	<= (A AND B);
+	Cout <= (A and B) OR (B AND Cin) OR (A AND Cin);
+
 
 end architecture;
