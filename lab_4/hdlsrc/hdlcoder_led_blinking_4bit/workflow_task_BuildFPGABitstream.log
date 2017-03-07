@@ -1,0 +1,10 @@
+Task "Build FPGA Bitstream" successful.
+Synthesis tool log: 
+
+Running embedded system build outside MATLAB.
+Please check external shell for system build progress.
+
+The generated bitstream file is located at:
+C:\Users\d57w762\Desktop\lab4\quartus_prj\system.sof
+
+

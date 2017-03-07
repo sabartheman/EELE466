@@ -1,0 +1,2 @@
+ --> led_count_ip_src_led_counter_pkg
+hdlcoder_led_blinking_4bit/led_counter --> led_count_ip_src_led_counter

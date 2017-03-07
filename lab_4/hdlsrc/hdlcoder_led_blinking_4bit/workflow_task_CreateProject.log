@@ -1,0 +1,141 @@
+Task "Create Project" successful.
+Synthesis tool log: 
+Warning: Current reference design "My test reference design" may not be compatible with the version "16.0.0" of "Altera QUARTUS II" tool on system path.
+This reference design is compatible with tool version "16.1".
+Attempt to continue using this reference design ...
+
+
+Generated Altera Qsys project:
+<a href="matlab:downstream.tool.openTargetTool('C:\altera\16.0_standard\quartus\sopc_builder\bin\qsys-edit system_soc.qsys &','C:\Users\d57w762\Desktop\lab4\quartus_prj\qsys_prj\system_soc.qsys',0);">C:\Users\d57w762\Desktop\lab4\quartus_prj\qsys_prj\system_soc.qsys</a>
+Generated Altera Quartus with Qsys Design project:
+<a href="matlab:downstream.tool.openTargetTool('C:\altera\16.0_standard\quartus\bin64\quartus system.qpf &','C:\Users\d57w762\Desktop\lab4\quartus_prj\system.qpf',0);">C:\Users\d57w762\Desktop\lab4\quartus_prj\system.qpf</a>
+
+Info: *******************************************************************
+Info: Running Quartus Prime Shell
+    Info: Version 16.0.0 Build 211 04/27/2016 SJ Standard Edition
+    Info: Copyright (C) 1991-2016 Altera Corporation. All rights reserved.
+    Info: Your use of Altera Corporation's design tools, logic functions 
+    Info: and other software and tools, and its AMPP partner logic 
+    Info: functions, and any output files from any of the foregoing 
+    Info: (including device programming or simulation files), and any 
+    Info: associated documentation or information are expressly subject 
+    Info: to the terms and conditions of the Altera Program License 
+    Info: Subscription Agreement, the Altera Quartus Prime License Agreement,
+    Info: the Altera MegaCore Function License Agreement, or other 
+    Info: applicable license agreement, including, without limitation, 
+    Info: that your use is for the sole purpose of programming logic 
+    Info: devices manufactured by Altera and sold by Altera or its 
+    Info: authorized distributors.  Please refer to the applicable 
+    Info: agreement for further details.
+    Info: Processing started: Tue Mar 07 12:53:57 2017
+Info: Command: quartus_sh -t quartus_create_prj.tcl
+Info: *******************************************************************
+Info: Running Quartus Prime Fitter
+    Info: Version 16.0.0 Build 211 04/27/2016 SJ Standard Edition
+    Info: Processing started: Tue Mar 07 12:53:59 2017
+Info: Command: quartus_fit --read_settings_files=on --write_settings_files=off system -c system --plan
+Info: qfit2_default_script.tcl version: #1
+Info: Project  = system
+Info: Revision = system
+Warning (11747): Analysis and Synthesis (quartus_map) with top-level entity name "system" was not run before running I/O Assignment Analysis -- I/O Assignment Analysis will check only I/O assignments on the reserved pins
+Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
+Info (20030): Parallel compilation is enabled and will use 4 of the 4 processors detected
+Info (119006): Selected device 5CSEMA4U23C6 for design "system"
+Info (21076): High junction temperature operating condition is not set. Assuming a default value of '85'.
+Info (21076): Low junction temperature operating condition is not set. Assuming a default value of '0'.
+Info (184020): Starting Fitter periphery placement operations
+Info (184021): Fitter periphery placement operations ending: elapsed time is 00:00:00
+Info (11798): Fitter preparation operations ending: elapsed time is 00:00:06
+Info: Quartus Prime I/O Assignment Analysis was successful. 0 errors, 2 warnings
+    Info: Peak virtual memory: 1291 megabytes
+    Info: Processing ended: Tue Mar 07 12:54:15 2017
+    Info: Elapsed time: 00:00:16
+    Info: Total CPU time (on all processors): 00:00:07
+
+INFO: Quartus license check was successful.
+
+Info (125061): Changed top-level design entity name to "system_soc"
+Info (23030): Evaluation of Tcl script quartus_create_prj.tcl was successful
+Info: Quartus Prime Shell was successful. 0 errors, 2 warnings
+    Info: Peak virtual memory: 422 megabytes
+    Info: Processing ended: Tue Mar 07 12:54:16 2017
+    Info: Elapsed time: 00:00:19
+    Info: Total CPU time (on all processors): 00:00:00
+
+Elapsed time is 19.2658 seconds.
+2017.03.07.12:54:20 Info: Doing: <b>qsys-script --script=qsys_create_system.tcl</b>
+2017.03.07.12:54:26 Info: load_system system_soc.qsys
+2017.03.07.12:54:40 Info: set_project_property DEVICE_FAMILY Cyclone V
+2017.03.07.12:54:40 Info: set_project_property DEVICE 5CSEMA4U23C6
+2017.03.07.12:54:40 Info: validate_system 
+2017.03.07.12:54:40 Info: save_system system_soc.qsys
+
+Elapsed time is 24.5251 seconds.
+2017.03.07.12:54:41 Info: Doing: <b>qsys-script --script=qsys_insert_ip.tcl</b>
+2017.03.07.12:54:44 Info: load_system system_soc.qsys
+2017.03.07.12:54:55 Info: add_instance led_count_ip_0 led_count_ip 1.0
+2017.03.07.12:54:55 Info: add_connection pll_0.outclk0 led_count_ip_0.ip_clk
+2017.03.07.12:54:55 Info: add_connection hps_0.h2f_reset led_count_ip_0.ip_rst
+2017.03.07.12:54:55 Info: add_connection hps_0.h2f_axi_master led_count_ip_0.s_axi
+2017.03.07.12:54:55 Info: set_connection_parameter_value hps_0.h2f_axi_master/led_count_ip_0.s_axi baseAddress 0x0000_0000
+2017.03.07.12:54:55 Info: add_connection pll_0.outclk0 led_count_ip_0.axi_clk
+2017.03.07.12:54:55 Info: add_connection hps_0.h2f_reset led_count_ip_0.axi_reset
+2017.03.07.12:54:55 Info: add_interface led_count_ip_0_LED conduit end
+2017.03.07.12:54:55 Info: set_interface_property led_count_ip_0_LED EXPORT_OF led_count_ip_0.LED
+2017.03.07.12:54:55 Info: validate_system 
+2017.03.07.12:54:55 Info: save_system system_soc.qsys
+
+Elapsed time is 14.3534 seconds.
+2017.03.07.12:55:09 Info: Saving generation log to C:/Users/d57w762/Desktop/lab4/quartus_prj/qsys_prj/qsys_gen/system_soc_generation.rpt
+2017.03.07.12:55:09 Info: Starting: <b>Create HDL design files for synthesis</b>
+2017.03.07.12:55:09 Info: qsys-generate C:\Users\d57w762\Desktop\lab4\quartus_prj\qsys_prj\system_soc.qsys --synthesis=VHDL --output-directory=C:\Users\d57w762\Desktop\lab4\quartus_prj\qsys_prj\qsys_gen\synthesis --family="Cyclone V" --part=5CSEMA4U23C6
+2017.03.07.12:55:09 Info: Loading qsys_prj/system_soc.qsys
+2017.03.07.12:55:09 Info: Reading input file
+2017.03.07.12:55:09 Info: Adding hps_0 [altera_hps 16.0]
+2017.03.07.12:55:09 Info: Parameterizing module hps_0
+2017.03.07.12:55:09 Info: Adding led_count_ip_0 [led_count_ip 1.0]
+2017.03.07.12:55:09 Info: Parameterizing module led_count_ip_0
+2017.03.07.12:55:09 Info: Adding pll_0 [altera_pll 16.0]
+2017.03.07.12:55:09 Info: Parameterizing module pll_0
+2017.03.07.12:55:09 Info: Building connections
+2017.03.07.12:55:09 Info: Parameterizing connections
+2017.03.07.12:55:09 Info: Validating
+2017.03.07.12:55:14 Info: Done reading input file
+2017.03.07.12:55:16 Info: system_soc.hps_0: HPS Main PLL counter settings: n = 0  m = 73
+2017.03.07.12:55:16 Info: system_soc.hps_0: HPS peripherial PLL counter settings: n = 0  m = 39
+2017.03.07.12:55:16 Warning: system_soc.hps_0: <b>"Configuration/HPS-to-FPGA user 0 clock frequency" (desired_cfg_clk_mhz)</b> requested 100.0 MHz, but only achieved 97.368421 MHz
+2017.03.07.12:55:16 Warning: system_soc.hps_0: <b>"QSPI clock frequency" (desired_qspi_clk_mhz)</b> requested 400.0 MHz, but only achieved 370.0 MHz
+2017.03.07.12:55:16 Warning: system_soc.hps_0: 1 or more output clock frequencies cannot be achieved precisely, consider revising desired output clock frequencies.
+2017.03.07.12:55:16 Info: system_soc.hps_0: ECC will be enabled in the preloader because an interface width of 24 or 40 has been chosen.
+2017.03.07.12:55:16 Info: system_soc.pll_0: The legal reference clock frequency is 5.0 MHz..800.0 MHz
+2017.03.07.12:55:16 Info: system_soc.pll_0: Able to implement PLL with user settings
+2017.03.07.12:55:18 Info: system_soc: Generating <b>system_soc</b> "<b>system_soc</b>" for QUARTUS_SYNTH
+2017.03.07.12:55:20 Info: Interconnect is inserted between master hps_0.h2f_axi_master and slave led_count_ip_0.s_axi because the master is of type axi and the slave is of type axi4.
+2017.03.07.12:55:21 Warning: hps_0.f2h_irq0: Cannot connect clock for <b>irq_mapper.sender</b>
+2017.03.07.12:55:21 Warning: hps_0.f2h_irq0: Cannot connect reset for <b>irq_mapper.sender</b>
+2017.03.07.12:55:21 Warning: hps_0.f2h_irq1: Cannot connect clock for <b>irq_mapper_001.sender</b>
+2017.03.07.12:55:21 Warning: hps_0.f2h_irq1: Cannot connect reset for <b>irq_mapper_001.sender</b>
+2017.03.07.12:55:23 Info: hps_0: "Running  for module: hps_0"
+2017.03.07.12:55:24 Info: hps_0: HPS Main PLL counter settings: n = 0  m = 73
+2017.03.07.12:55:24 Info: hps_0: HPS peripherial PLL counter settings: n = 0  m = 39
+2017.03.07.12:55:24 Warning: hps_0: <b>"Configuration/HPS-to-FPGA user 0 clock frequency" (desired_cfg_clk_mhz)</b> requested 100.0 MHz, but only achieved 97.368421 MHz
+2017.03.07.12:55:24 Warning: hps_0: <b>"QSPI clock frequency" (desired_qspi_clk_mhz)</b> requested 400.0 MHz, but only achieved 370.0 MHz
+2017.03.07.12:55:24 Warning: hps_0: 1 or more output clock frequencies cannot be achieved precisely, consider revising desired output clock frequencies.
+2017.03.07.12:55:24 Info: hps_0: ECC will be enabled in the preloader because an interface width of 24 or 40 has been chosen.
+2017.03.07.12:55:25 Info: hps_0: "<b>system_soc</b>" instantiated <b>altera_hps</b> "<b>hps_0</b>"
+2017.03.07.12:55:25 Info: led_count_ip_0: "<b>system_soc</b>" instantiated <b>led_count_ip</b> "<b>led_count_ip_0</b>"
+2017.03.07.12:55:25 Info: pll_0: "<b>system_soc</b>" instantiated <b>altera_pll</b> "<b>pll_0</b>"
+2017.03.07.12:55:26 Info: mm_interconnect_0: "<b>system_soc</b>" instantiated <b>altera_mm_interconnect</b> "<b>mm_interconnect_0</b>"
+2017.03.07.12:55:26 Info: irq_mapper: "<b>system_soc</b>" instantiated <b>altera_irq_mapper</b> "<b>irq_mapper</b>"
+2017.03.07.12:55:26 Info: rst_controller: "<b>system_soc</b>" instantiated <b>altera_reset_controller</b> "<b>rst_controller</b>"
+2017.03.07.12:55:26 Info: fpga_interfaces: "<b>hps_0</b>" instantiated <b>altera_interface_generator</b> "<b>fpga_interfaces</b>"
+2017.03.07.12:55:26 Info: hps_io: "<b>hps_0</b>" instantiated <b>altera_hps_io</b> "<b>hps_io</b>"
+2017.03.07.12:55:26 Info: led_count_ip_0_s_axi_translator: "<b>mm_interconnect_0</b>" instantiated <b>altera_merlin_axi_translator</b> "<b>led_count_ip_0_s_axi_translator</b>"
+2017.03.07.12:55:49 Info: border: "<b>hps_io</b>" instantiated <b>altera_interface_generator</b> "<b>border</b>"
+2017.03.07.12:55:49 Info: system_soc: Done "<b>system_soc</b>" with 11 modules, 72 files
+2017.03.07.12:55:49 Info: qsys-generate succeeded.
+2017.03.07.12:55:49 Info: Finished: <b>Create HDL design files for synthesis</b>
+
+Elapsed time is 54.2519 seconds.
+
+

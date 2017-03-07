@@ -1,0 +1,48 @@
+Info: Starting: Create HDL design files for synthesis
+Info: qsys-generate C:\Users\d57w762\Desktop\lab4\quartus_prj\qsys_prj\system_soc.qsys --synthesis=VHDL --output-directory=C:\Users\d57w762\Desktop\lab4\quartus_prj\qsys_prj\qsys_gen\synthesis --family="Cyclone V" --part=5CSEMA4U23C6
+Progress: Loading qsys_prj/system_soc.qsys
+Progress: Reading input file
+Progress: Adding hps_0 [altera_hps 16.0]
+Progress: Parameterizing module hps_0
+Progress: Adding led_count_ip_0 [led_count_ip 1.0]
+Progress: Parameterizing module led_count_ip_0
+Progress: Adding pll_0 [altera_pll 16.0]
+Progress: Parameterizing module pll_0
+Progress: Building connections
+Progress: Parameterizing connections
+Progress: Validating
+Progress: Done reading input file
+Info: system_soc.hps_0: HPS Main PLL counter settings: n = 0  m = 73
+Info: system_soc.hps_0: HPS peripherial PLL counter settings: n = 0  m = 39
+Warning: system_soc.hps_0: "Configuration/HPS-to-FPGA user 0 clock frequency" (desired_cfg_clk_mhz) requested 100.0 MHz, but only achieved 97.368421 MHz
+Warning: system_soc.hps_0: "QSPI clock frequency" (desired_qspi_clk_mhz) requested 400.0 MHz, but only achieved 370.0 MHz
+Warning: system_soc.hps_0: 1 or more output clock frequencies cannot be achieved precisely, consider revising desired output clock frequencies.
+Info: system_soc.hps_0: ECC will be enabled in the preloader because an interface width of 24 or 40 has been chosen.
+Info: system_soc.pll_0: The legal reference clock frequency is 5.0 MHz..800.0 MHz
+Info: system_soc.pll_0: Able to implement PLL with user settings
+Info: system_soc: Generating system_soc "system_soc" for QUARTUS_SYNTH
+Info: Interconnect is inserted between master hps_0.h2f_axi_master and slave led_count_ip_0.s_axi because the master is of type axi and the slave is of type axi4.
+Warning: hps_0.f2h_irq0: Cannot connect clock for irq_mapper.sender
+Warning: hps_0.f2h_irq0: Cannot connect reset for irq_mapper.sender
+Warning: hps_0.f2h_irq1: Cannot connect clock for irq_mapper_001.sender
+Warning: hps_0.f2h_irq1: Cannot connect reset for irq_mapper_001.sender
+Info: hps_0: "Running  for module: hps_0"
+Info: hps_0: HPS Main PLL counter settings: n = 0  m = 73
+Info: hps_0: HPS peripherial PLL counter settings: n = 0  m = 39
+Warning: hps_0: "Configuration/HPS-to-FPGA user 0 clock frequency" (desired_cfg_clk_mhz) requested 100.0 MHz, but only achieved 97.368421 MHz
+Warning: hps_0: "QSPI clock frequency" (desired_qspi_clk_mhz) requested 400.0 MHz, but only achieved 370.0 MHz
+Warning: hps_0: 1 or more output clock frequencies cannot be achieved precisely, consider revising desired output clock frequencies.
+Info: hps_0: ECC will be enabled in the preloader because an interface width of 24 or 40 has been chosen.
+Info: hps_0: "system_soc" instantiated altera_hps "hps_0"
+Info: led_count_ip_0: "system_soc" instantiated led_count_ip "led_count_ip_0"
+Info: pll_0: "system_soc" instantiated altera_pll "pll_0"
+Info: mm_interconnect_0: "system_soc" instantiated altera_mm_interconnect "mm_interconnect_0"
+Info: irq_mapper: "system_soc" instantiated altera_irq_mapper "irq_mapper"
+Info: rst_controller: "system_soc" instantiated altera_reset_controller "rst_controller"
+Info: fpga_interfaces: "hps_0" instantiated altera_interface_generator "fpga_interfaces"
+Info: hps_io: "hps_0" instantiated altera_hps_io "hps_io"
+Info: led_count_ip_0_s_axi_translator: "mm_interconnect_0" instantiated altera_merlin_axi_translator "led_count_ip_0_s_axi_translator"
+Info: border: "hps_io" instantiated altera_interface_generator "border"
+Info: system_soc: Done "system_soc" with 11 modules, 72 files
+Info: qsys-generate succeeded.
+Info: Finished: Create HDL design files for synthesis

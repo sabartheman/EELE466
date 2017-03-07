@@ -1,0 +1,36 @@
+Task "Program Target Device" successful.
+Synthesis tool log: 
+Info: *******************************************************************
+Info: Running Quartus Prime Programmer
+    Info: Version 16.0.0 Build 211 04/27/2016 SJ Standard Edition
+    Info: Copyright (C) 1991-2016 Altera Corporation. All rights reserved.
+    Info: Your use of Altera Corporation's design tools, logic functions 
+    Info: and other software and tools, and its AMPP partner logic 
+    Info: functions, and any output files from any of the foregoing 
+    Info: (including device programming or simulation files), and any 
+    Info: associated documentation or information are expressly subject 
+    Info: to the terms and conditions of the Altera Program License 
+    Info: Subscription Agreement, the Altera Quartus Prime License Agreement,
+    Info: the Altera MegaCore Function License Agreement, or other 
+    Info: applicable license agreement, including, without limitation, 
+    Info: that your use is for the sole purpose of programming logic 
+    Info: devices manufactured by Altera and sold by Altera or its 
+    Info: authorized distributors.  Please refer to the applicable 
+    Info: agreement for further details.
+    Info: Processing started: Tue Mar 07 13:17:04 2017
+Info: Command: quartus_pgm --mode=jtag -o p;C:/Users/d57w762/Desktop/lab4/quartus_prj/system.sof@2
+Info (213045): Using programming cable "DE-SoC [USB-1]"
+Info (213011): Using programming file C:/Users/d57w762/Desktop/lab4/quartus_prj/system.sof with checksum 0x004FD317 for device 5CSEMA4U23@2
+Info (209060): Started Programmer operation at Tue Mar 07 13:17:05 2017
+Info (209016): Configuring device index 2
+Info (209017): Device 2 contains JTAG ID code 0x02D010DD
+Info (209007): Configuration succeeded -- 1 device(s) configured
+Info (209011): Successfully performed operation(s)
+Info (209061): Ended Programmer operation at Tue Mar 07 13:17:06 2017
+Info: Quartus Prime Programmer was successful. 0 errors, 0 warnings
+    Info: Peak virtual memory: 284 megabytes
+    Info: Processing ended: Tue Mar 07 13:17:06 2017
+    Info: Elapsed time: 00:00:02
+    Info: Total CPU time (on all processors): 00:00:01
+
+Elapsed time is 2.7963 seconds.
