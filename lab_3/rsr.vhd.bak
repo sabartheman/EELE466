@@ -7,9 +7,9 @@ entity rsr is
 	port(
 	--inputs
 	clk	:in std_logic;
-	input	:in std_logic_vector(27 downto 0); --word length
-	W	:in std_logic_vector(4 downto 0); --word length
-	F	:in std_logic_vector(4 downto 0); --floating point length
+	input	:in std_logic_vector(27 downto 0); --input length
+	W	:in std_logic_vector(5 downto 0);  --word length
+	F	:in std_logic_vector(5 downto 0);  --floating point length
 --	Z	:in std_logic_vector(27 downto 0); --number of leading zeros
 	--other things?
 	--outputs	
@@ -26,8 +26,8 @@ component guess
 	port(
 	clk	:in std_logic;
 	input	:in std_logic_vector(27 downto 0); --word length
-	W	:in std_logic_vector(4 downto 0);
-	F	:in std_logic_vector(4 downto 0);  --floating point lengths
+	W	:in std_logic_vector(5 downto 0);
+	F	:in std_logic_vector(5 downto 0);  --floating point lengths
 	Yout	:out std_logic_vector(31 downto 0) --output of the initial guess Yo	
 	);
 end component;

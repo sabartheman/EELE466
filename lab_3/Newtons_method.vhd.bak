@@ -1,0 +1,10 @@
+entity Newtons_method is 
+	port(
+	
+	
+	);
+end entity;
+
+
+
+architecture Newtons_method_arch of Newtons_method

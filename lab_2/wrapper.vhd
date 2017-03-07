@@ -7,7 +7,7 @@ entity wrapper is
     port(
         Clock          :in std_logic;
         X,Y            :in std_logic_vector(7 downto 0);    
-        Subtract       :in std_logic_vector(1 downto 0);
+        Subtract       :in std_logic;
         Sum            :out std_logic_vector(7 downto 0);
         Carryout       :out std_logic
         );
@@ -29,7 +29,7 @@ component eightbit_cla is
 end component;
 
     signal A,B    :std_logic_vector (7 downto 0);
-    signal S      :std_logic_vector (1 downto 0);
+    signal S      :std_logic;
 
 begin 
 
@@ -44,6 +44,6 @@ begin
         end if;
     end process;
 
-    A1 : eightbit_cla port map(A,B,'0',S(0),Sum,Carryout);
+    A1 : eightbit_cla port map(A,B,'0',S,Sum,Carryout);
 
 end architecture;

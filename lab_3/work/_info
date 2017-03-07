@@ -1,0 +1,258 @@
+m255
+K4
+z2
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 dC:/Users/s96s544/Desktop/EELE466-master/lab_3
+Eguess
+Z1 w1488309263
+Z2 DPx4 ieee 11 numeric_std 0 22 :ASDNFgHXf_ih3J@9F3Ze1
+Z3 DPx3 std 6 textio 0 22 zE1`LPoLg^DX3Oz^4Fj1K3
+Z4 DPx4 ieee 14 std_logic_1164 0 22 eNV`TJ_GofJTzYa?f<@Oe1
+R0
+Z5 8C:/Users/s96s544/Desktop/EELE466-master/lab_3/guess.vhd
+Z6 FC:/Users/s96s544/Desktop/EELE466-master/lab_3/guess.vhd
+l0
+L6
+VF@IWQf^^<b3c;:jzgTP5o2
+!s100 1<KK5abX5<zcM4B?_GRVd2
+Z7 OL;C;10.5c;63
+32
+Z8 !s110 1488315345
+!i10b 1
+Z9 !s108 1488315345.000000
+Z10 !s90 -work|work|-2002|-explicit|-vopt|-stats=none|C:/Users/s96s544/Desktop/EELE466-master/lab_3/guess.vhd|
+Z11 !s107 C:/Users/s96s544/Desktop/EELE466-master/lab_3/guess.vhd|
+!i113 0
+Z12 o-work work -2002 -explicit
+Z13 tExplicit 1 CvgOpt 0
+Aguess_arch
+R2
+R3
+R4
+DEx4 work 5 guess 0 22 F@IWQf^^<b3c;:jzgTP5o2
+32
+R8
+l56
+L18
+Vzm8RNX30W@EnANP_mX`Cc3
+!s100 j3nlA]:=N1PW=FOP10WEG0
+R7
+!i10b 1
+R9
+R10
+R11
+!i113 0
+R12
+R13
+Eiterations
+Z14 w1488315295
+R2
+R3
+R4
+R0
+Z15 8C:/Users/s96s544/Desktop/EELE466-master/lab_3/iterations.vhd
+Z16 FC:/Users/s96s544/Desktop/EELE466-master/lab_3/iterations.vhd
+l0
+L6
+VBC<K8z`<m6m^@[@]XW^jL2
+!s100 >PzJEPIZRGC3RgkcT7o273
+R7
+32
+R8
+!i10b 1
+R9
+Z17 !s90 -work|work|-2002|-explicit|-vopt|-stats=none|C:/Users/s96s544/Desktop/EELE466-master/lab_3/iterations.vhd|
+Z18 !s107 C:/Users/s96s544/Desktop/EELE466-master/lab_3/iterations.vhd|
+!i113 0
+R12
+R13
+Aiterations_arch
+R2
+R3
+R4
+DEx4 work 10 iterations 0 22 BC<K8z`<m6m^@[@]XW^jL2
+32
+R8
+l36
+L17
+VIFPVjc;l4@eLoYQ[7iJCF2
+!s100 6kJj<Sc2h09RS]lm@IZJk2
+R7
+!i10b 1
+R9
+R17
+R18
+!i113 0
+R12
+R13
+Elzc
+Z19 w1486497948
+Z20 DPx4 ieee 18 std_logic_unsigned 0 22 ;eZjO2D4ZDz<]0>8AL<ne1
+Z21 DPx4 ieee 15 std_logic_arith 0 22 [G314=:2zXJ`VORJe1J@Z1
+R3
+R4
+R0
+Z22 8C:/Users/s96s544/Desktop/EELE466-master/lab_3/lzc.vhd
+Z23 FC:/Users/s96s544/Desktop/EELE466-master/lab_3/lzc.vhd
+l0
+L6
+V;g]YcoAKBP@B=k?n4Zdze0
+!s100 L6`Q23?oiVM?I34XShgB<3
+R7
+32
+R8
+!i10b 1
+R9
+Z24 !s90 -work|work|-2002|-explicit|-vopt|-stats=none|C:/Users/s96s544/Desktop/EELE466-master/lab_3/lzc.vhd|
+Z25 !s107 C:/Users/s96s544/Desktop/EELE466-master/lab_3/lzc.vhd|
+!i113 0
+R12
+R13
+Abehavioral
+R20
+R21
+R3
+R4
+DEx4 work 3 lzc 0 22 ;g]YcoAKBP@B=k?n4Zdze0
+32
+R8
+l45
+L14
+VN`;ilD9eB^>e6gCDImH=X0
+!s100 kfNGmP5K8RIzoidVS6?g^0
+R7
+!i10b 1
+R9
+R24
+R25
+!i113 0
+R12
+R13
+Enewtons_method
+Z26 w1488315028
+R2
+R3
+R4
+R0
+Z27 8C:/Users/s96s544/Desktop/EELE466-master/lab_3/Newtons_method.vhd
+Z28 FC:/Users/s96s544/Desktop/EELE466-master/lab_3/Newtons_method.vhd
+l0
+L5
+VQMl6ZJ1g_`UWVhj<hOCb`2
+!s100 lz6f4e<TNn;NnD1@7Ro5c2
+R7
+32
+R8
+!i10b 1
+R9
+Z29 !s90 -work|work|-2002|-explicit|-vopt|-stats=none|C:/Users/s96s544/Desktop/EELE466-master/lab_3/Newtons_method.vhd|
+Z30 !s107 C:/Users/s96s544/Desktop/EELE466-master/lab_3/Newtons_method.vhd|
+!i113 0
+R12
+R13
+Anewtons_method_arch
+R2
+R3
+R4
+DEx4 work 14 newtons_method 0 22 QMl6ZJ1g_`UWVhj<hOCb`2
+32
+R8
+l26
+L16
+V=@?Bg7gOdc]_W7i8EAG@=3
+!s100 mRLg9hN_eU_U@z?U3d0eC0
+R7
+!i10b 1
+R9
+R29
+R30
+!i113 0
+R12
+R13
+Erom1
+Z31 w1487105336
+Z32 DPx9 altera_mf 20 altera_mf_components 0 22 ;c6L;ME=07Qo?aCzgc8if0
+R3
+R4
+R0
+Z33 8C:/Users/s96s544/Desktop/EELE466-master/lab_3/ROM1.vhd
+Z34 FC:/Users/s96s544/Desktop/EELE466-master/lab_3/ROM1.vhd
+l0
+L43
+V?OAz;c4BY4X`AWfW7Di@C2
+!s100 k;5K<K;=LNC>^I=GcQ4_22
+R7
+32
+R8
+!i10b 1
+R9
+Z35 !s90 -work|work|-2002|-explicit|-vopt|-stats=none|C:/Users/s96s544/Desktop/EELE466-master/lab_3/ROM1.vhd|
+Z36 !s107 C:/Users/s96s544/Desktop/EELE466-master/lab_3/ROM1.vhd|
+!i113 0
+R12
+R13
+Asyn
+R32
+R3
+R4
+DEx4 work 4 rom1 0 22 ?OAz;c4BY4X`AWfW7Di@C2
+32
+R8
+l57
+L53
+V`cBD_GE@`<z1]ZDYOXXz23
+!s100 g1SD<DYO]V_JAEHB2V^H=1
+R7
+!i10b 1
+R9
+R35
+R36
+!i113 0
+R12
+R13
+Ersr
+Z37 w1488315304
+R21
+R3
+R4
+R0
+Z38 8C:/Users/s96s544/Desktop/EELE466-master/lab_3/rsr.vhd
+Z39 FC:/Users/s96s544/Desktop/EELE466-master/lab_3/rsr.vhd
+l0
+L6
+VK95_akAZNG3_PiWA^6PfN2
+!s100 3_NmALG@<[1R8ZFj`_LKA1
+R7
+32
+R8
+!i10b 1
+R9
+Z40 !s90 -work|work|-2002|-explicit|-vopt|-stats=none|C:/Users/s96s544/Desktop/EELE466-master/lab_3/rsr.vhd|
+Z41 !s107 C:/Users/s96s544/Desktop/EELE466-master/lab_3/rsr.vhd|
+!i113 0
+R12
+R13
+Arsr_arch
+R21
+R3
+R4
+DEx4 work 3 rsr 0 22 K95_akAZNG3_PiWA^6PfN2
+32
+R8
+l51
+L22
+VReHgGFJFbUDj>UBE@zUdM1
+!s100 T0<652nZ8nO;?jTJZbW9K3
+R7
+!i10b 1
+R9
+R40
+R41
+!i113 0
+R12
+R13

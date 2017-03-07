@@ -1,0 +1,195 @@
+|wrapper
+Clock => S.CLK
+Clock => B[0].CLK
+Clock => B[1].CLK
+Clock => B[2].CLK
+Clock => B[3].CLK
+Clock => B[4].CLK
+Clock => B[5].CLK
+Clock => B[6].CLK
+Clock => B[7].CLK
+Clock => A[0].CLK
+Clock => A[1].CLK
+Clock => A[2].CLK
+Clock => A[3].CLK
+Clock => A[4].CLK
+Clock => A[5].CLK
+Clock => A[6].CLK
+Clock => A[7].CLK
+X[0] => A[0].DATAIN
+X[1] => A[1].DATAIN
+X[2] => A[2].DATAIN
+X[3] => A[3].DATAIN
+X[4] => A[4].DATAIN
+X[5] => A[5].DATAIN
+X[6] => A[6].DATAIN
+X[7] => A[7].DATAIN
+Y[0] => B[0].DATAIN
+Y[1] => B[1].DATAIN
+Y[2] => B[2].DATAIN
+Y[3] => B[3].DATAIN
+Y[4] => B[4].DATAIN
+Y[5] => B[5].DATAIN
+Y[6] => B[6].DATAIN
+Y[7] => B[7].DATAIN
+Subtract => S.DATAIN
+Sum[0] << bit_ripple:A1.S[0]
+Sum[1] << bit_ripple:A1.S[1]
+Sum[2] << bit_ripple:A1.S[2]
+Sum[3] << bit_ripple:A1.S[3]
+Sum[4] << bit_ripple:A1.S[4]
+Sum[5] << bit_ripple:A1.S[5]
+Sum[6] << bit_ripple:A1.S[6]
+Sum[7] << bit_ripple:A1.S[7]
+Carryout << bit_ripple:A1.Cout
+
+
+|wrapper|bit_ripple:A1
+A[0] => full_adder:A0.A
+A[1] => full_adder:A1.A
+A[2] => full_adder:A2.A
+A[3] => full_adder:A3.A
+A[4] => full_adder:A4.A
+A[5] => full_adder:A5.A
+A[6] => full_adder:A6.A
+A[7] => full_adder:A7.A
+B[0] => X1.IN0
+B[1] => X2.IN0
+B[2] => X3.IN0
+B[3] => X4.IN0
+B[4] => X5.IN0
+B[5] => X6.IN0
+B[6] => X7.IN0
+B[7] => X8.IN0
+sub => X1.IN1
+sub => X2.IN1
+sub => X3.IN1
+sub => X4.IN1
+sub => X5.IN1
+sub => X6.IN1
+sub => X7.IN1
+sub => X8.IN1
+sub => full_adder:A0.Cin
+S[0] <= full_adder:A0.S
+S[1] <= full_adder:A1.S
+S[2] <= full_adder:A2.S
+S[3] <= full_adder:A3.S
+S[4] <= full_adder:A4.S
+S[5] <= full_adder:A5.S
+S[6] <= full_adder:A6.S
+S[7] <= full_adder:A7.S
+Cout <= full_adder:A7.Cout
+
+
+|wrapper|bit_ripple:A1|full_adder:A0
+A => s.IN0
+A => Cout.IN0
+A => Cout.IN0
+B => s.IN1
+B => Cout.IN1
+B => Cout.IN0
+Cin => s.IN1
+Cin => Cout.IN1
+Cin => Cout.IN1
+Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
+s <= s.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|wrapper|bit_ripple:A1|full_adder:A1
+A => s.IN0
+A => Cout.IN0
+A => Cout.IN0
+B => s.IN1
+B => Cout.IN1
+B => Cout.IN0
+Cin => s.IN1
+Cin => Cout.IN1
+Cin => Cout.IN1
+Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
+s <= s.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|wrapper|bit_ripple:A1|full_adder:A2
+A => s.IN0
+A => Cout.IN0
+A => Cout.IN0
+B => s.IN1
+B => Cout.IN1
+B => Cout.IN0
+Cin => s.IN1
+Cin => Cout.IN1
+Cin => Cout.IN1
+Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
+s <= s.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|wrapper|bit_ripple:A1|full_adder:A3
+A => s.IN0
+A => Cout.IN0
+A => Cout.IN0
+B => s.IN1
+B => Cout.IN1
+B => Cout.IN0
+Cin => s.IN1
+Cin => Cout.IN1
+Cin => Cout.IN1
+Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
+s <= s.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|wrapper|bit_ripple:A1|full_adder:A4
+A => s.IN0
+A => Cout.IN0
+A => Cout.IN0
+B => s.IN1
+B => Cout.IN1
+B => Cout.IN0
+Cin => s.IN1
+Cin => Cout.IN1
+Cin => Cout.IN1
+Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
+s <= s.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|wrapper|bit_ripple:A1|full_adder:A5
+A => s.IN0
+A => Cout.IN0
+A => Cout.IN0
+B => s.IN1
+B => Cout.IN1
+B => Cout.IN0
+Cin => s.IN1
+Cin => Cout.IN1
+Cin => Cout.IN1
+Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
+s <= s.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|wrapper|bit_ripple:A1|full_adder:A6
+A => s.IN0
+A => Cout.IN0
+A => Cout.IN0
+B => s.IN1
+B => Cout.IN1
+B => Cout.IN0
+Cin => s.IN1
+Cin => Cout.IN1
+Cin => Cout.IN1
+Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
+s <= s.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|wrapper|bit_ripple:A1|full_adder:A7
+A => s.IN0
+A => Cout.IN0
+A => Cout.IN0
+B => s.IN1
+B => Cout.IN1
+B => Cout.IN0
+Cin => s.IN1
+Cin => Cout.IN1
+Cin => Cout.IN1
+Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
+s <= s.DB_MAX_OUTPUT_PORT_TYPE
+
+

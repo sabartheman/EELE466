@@ -92,8 +92,8 @@ text(-2, 5, 'Red line : y = -3/2x')
 %--------------------------------------------------------------------------
 % Hardware Simulation
 %--------------------------------------------------------------------------
-WordLength = 32;
-FractionLength = 16;
+WordLength = 28;
+FractionLength = 14;
 IntegerLength = WordLength-FractionLength;
 %-------------------------------------
 % Create lookup table for (x)^(-3/2)
