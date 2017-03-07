@@ -45,6 +45,6 @@ proc vsimmatlabsysobj {args} {
   lappend args [join $sllibarg]
   uplevel 1 [join $args]
 }
-vsimmatlabsysobj rsr -t 1ns -novopt  -socket 50689;
+vsimmatlabsysobj rsr -t 1ns -novopt  -socket 61182;
 add wave rsr/*;
 

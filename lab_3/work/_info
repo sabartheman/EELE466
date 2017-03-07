@@ -9,7 +9,7 @@ z2
 cModel Technology
 Z0 dC:/Users/s96s544/Desktop/EELE466-master/lab_3
 Eguess
-Z1 w1488309263
+Z1 w1487874460
 Z2 DPx4 ieee 11 numeric_std 0 22 :ASDNFgHXf_ih3J@9F3Ze1
 Z3 DPx3 std 6 textio 0 22 zE1`LPoLg^DX3Oz^4Fj1K3
 Z4 DPx4 ieee 14 std_logic_1164 0 22 eNV`TJ_GofJTzYa?f<@Oe1
@@ -22,9 +22,9 @@ VF@IWQf^^<b3c;:jzgTP5o2
 !s100 1<KK5abX5<zcM4B?_GRVd2
 Z7 OL;C;10.5c;63
 32
-Z8 !s110 1488315345
+Z8 !s110 1488264922
 !i10b 1
-Z9 !s108 1488315345.000000
+Z9 !s108 1488264922.000000
 Z10 !s90 -work|work|-2002|-explicit|-vopt|-stats=none|C:/Users/s96s544/Desktop/EELE466-master/lab_3/guess.vhd|
 Z11 !s107 C:/Users/s96s544/Desktop/EELE466-master/lab_3/guess.vhd|
 !i113 0
@@ -39,8 +39,8 @@ DEx4 work 5 guess 0 22 F@IWQf^^<b3c;:jzgTP5o2
 R8
 l56
 L18
-Vzm8RNX30W@EnANP_mX`Cc3
-!s100 j3nlA]:=N1PW=FOP10WEG0
+Ve4?_9QPKzG`5Ge>jSW2h;2
+!s100 <Q8;bEFJ`_9PPQI4E8Wj93
 R7
 !i10b 1
 R9
@@ -50,7 +50,7 @@ R11
 R12
 R13
 Eiterations
-Z14 w1488315295
+Z14 w1488264881
 R2
 R3
 R4
@@ -80,8 +80,8 @@ DEx4 work 10 iterations 0 22 BC<K8z`<m6m^@[@]XW^jL2
 R8
 l36
 L17
-VIFPVjc;l4@eLoYQ[7iJCF2
-!s100 6kJj<Sc2h09RS]lm@IZJk2
+V_C@gkgf5EAYe1^3e;03>12
+!s100 9m[SMhnD3OL2nAYL9Qfcm2
 R7
 !i10b 1
 R9
@@ -134,7 +134,7 @@ R25
 R12
 R13
 Enewtons_method
-Z26 w1488315028
+Z26 w1488264589
 R2
 R3
 R4
@@ -143,8 +143,8 @@ Z27 8C:/Users/s96s544/Desktop/EELE466-master/lab_3/Newtons_method.vhd
 Z28 FC:/Users/s96s544/Desktop/EELE466-master/lab_3/Newtons_method.vhd
 l0
 L5
-VQMl6ZJ1g_`UWVhj<hOCb`2
-!s100 lz6f4e<TNn;NnD1@7Ro5c2
+VJX0OzdGh^M`oTa2IHAlUe2
+!s100 Sj`Yh5Y:D@V]LPb4hz4Id1
 R7
 32
 R8
@@ -159,13 +159,13 @@ Anewtons_method_arch
 R2
 R3
 R4
-DEx4 work 14 newtons_method 0 22 QMl6ZJ1g_`UWVhj<hOCb`2
+DEx4 work 14 newtons_method 0 22 JX0OzdGh^M`oTa2IHAlUe2
 32
 R8
 l26
 L16
-V=@?Bg7gOdc]_W7i8EAG@=3
-!s100 mRLg9hN_eU_U@z?U3d0eC0
+VU_:O]1RHbS6kT;3L6WHG;2
+!s100 lTHQDV76hWc]nP>hFW>B>2
 R7
 !i10b 1
 R9
@@ -216,7 +216,7 @@ R36
 R12
 R13
 Ersr
-Z37 w1488315304
+Z37 w1488264601
 R21
 R3
 R4

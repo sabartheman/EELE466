@@ -1,0 +1,53 @@
+if { [catch {vsimulink rsr -t 1ns -novopt  } errmsg] } {
+    echo "Loading simulation and HDL Verifier library failed."; 
+    echo $errmsg; 
+    quit -f; 
+}
+# vsim rsr -t 1ns -novopt -foreign "simlinkserver {C:/MATLAB/R2016a/toolbox/edalink/extensions/modelsim/windows64/liblfmhdls_gcc450.dll}  ; -batch  ; -socket 65045 " 
+# Start time: 20:09:29 on Feb 27,2017
+# ** Warning: (vsim-8891) All optimizations are turned off because the -novopt switch is in effect. This will cause your simulation to run very slowly. If you are using this switch to preserve visibility for Debug or PLI features please see the User's Manual section on Preserving Object Visibility with vopt.
+# //  ModelSim SE-64 10.5c Jul 21 2016
+# //
+# //  Copyright 1991-2016 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  ModelSim SE-64 and its associated documentation contain trade
+# //  secrets and commercial or financial information that are the property of
+# //  Mentor Graphics Corporation and are privileged, confidential,
+# //  and exempt from disclosure under the Freedom of Information Act,
+# //  5 U.S.C. Section 552. Furthermore, this information
+# //  is prohibited from disclosure under the Trade Secrets Act,
+# //  18 U.S.C. Section 1905.
+# //
+# Loading std.standard
+# Refreshing C:/Users/s96s544/Desktop/EELE466-master/lab_3/work.rsr(rsr_arch)
+# Loading std.textio(body)
+# Loading ieee.std_logic_1164(body)
+# Loading ieee.std_logic_arith(body)
+# Loading work.rsr(rsr_arch)
+# Refreshing C:/Users/s96s544/Desktop/EELE466-master/lab_3/work.guess(guess_arch)
+# Loading ieee.numeric_std(body)
+# Loading work.guess(guess_arch)
+# Refreshing C:/Users/s96s544/Desktop/EELE466-master/lab_3/work.lzc(behavioral)
+# Loading ieee.std_logic_unsigned(body)
+# Loading work.lzc(behavioral)
+# Refreshing C:/Users/s96s544/Desktop/EELE466-master/lab_3/work.rom1(syn)
+# Loading altera_mf.altera_mf_components
+# Loading work.rom1(syn)
+# Loading altera_mf.altera_common_conversion(body)
+# Loading altera_mf.altera_device_families(body)
+# Loading altera_mf.altsyncram(translated)
+# Refreshing C:/Users/s96s544/Desktop/EELE466-master/lab_3/work.iterations(iterations_arch)
+# Loading work.iterations(iterations_arch)
+# Loading C:/MATLAB/R2016a/toolbox/edalink/extensions/modelsim/windows64/liblfmhdls_gcc450.dll
+# ************************************************************************
+# HDL server has been started in batch mode. The HDL simulator will be 
+# blocked until Simulink starts cosimulation. If you do not want to run
+# in batch mode, restart the HDL simulator in a different run mode. To 
+# exit the HDL simulator without running a cosimulation session, issue 
+# the breakHdlSim('65045') command in MATLAB.
+
+# 
+# <EOF>
+# End time: 20:09:31 on Feb 27,2017, Elapsed time: 0:00:02
+# Errors: 0, Warnings: 1

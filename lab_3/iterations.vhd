@@ -19,19 +19,19 @@ architecture iterations_arch of iterations is
 
 component Newtons_method
 	port(
-	clk				:in std_logic;
-	Xin		 		:in std_logic_vector(27 downto 0);
-	Yin		 		:in std_logic_vector(55 downto 0);
-	Yguessout 		:out std_logic_vector(55 downto 0)	
+	clk				:in  std_logic;
+	Xin		 		:in  std_logic_vector(27 downto 0);
+	Yin		 		:in  std_logic_vector(27 downto 0);
+	Yguessout 		:out std_logic_vector(27 downto 0)	
 	);
 end component;
 
 	
 	
-	signal yin 	   						:std_logic_vector(55 downto 0); 
+	signal yin 	   						:std_logic_vector(27 downto 0); 
 	signal Xinput							:std_logic_vector(27 downto 0); 
-	signal Yest1,Yest2,Yest3			:std_logic_vector(55 downto 0);
-	signal Yfinal							:std_logic_vector(55 downto 0);
+	signal Yest1,Yest2,Yest3			:std_logic_vector(27 downto 0);
+	signal Yfinal							:std_logic_vector(27 downto 0);
 	
 begin
 
@@ -41,7 +41,7 @@ begin
 
 
 xinput <= inx;
-yin <= "00000000000000" & yguess & "00000000000000";
+yin <= yguess;
 
 
 Gen_latch : for I in 0 to 3 generate
@@ -68,7 +68,7 @@ end generate Gen_latch;
 
 
 
-outy <= Yfinal(41 downto 14);
+outy <= Yfinal;
 
 --Latch : Newtons_method port map (clk,Xinput,yguess, outy);
 

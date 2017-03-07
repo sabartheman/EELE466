@@ -126,6 +126,9 @@ begin
 	
 	   
 end process;
+
+	--goofin around
+	--Yout <=  std_logic_vector((signed(yguess(40 downto 13))*"11"-signed(input)*(signed(yguess) sll 2))/"10")(27 downto 0);
 	
 	Yout <=  yguess(40 downto 13);
 	

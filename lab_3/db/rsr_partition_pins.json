@@ -240,14 +240,6 @@
 					"strict" : false
 				},
 				{
-					"name" : "F[5]",
-					"strict" : false
-				},
-				{
-					"name" : "W[5]",
-					"strict" : false
-				},
-				{
 					"name" : "F[2]",
 					"strict" : false
 				},
@@ -264,6 +256,14 @@
 					"strict" : false
 				},
 				{
+					"name" : "F[3]",
+					"strict" : false
+				},
+				{
+					"name" : "W[3]",
+					"strict" : false
+				},
+				{
 					"name" : "F[4]",
 					"strict" : false
 				},
@@ -272,11 +272,11 @@
 					"strict" : false
 				},
 				{
-					"name" : "F[3]",
+					"name" : "F[5]",
 					"strict" : false
 				},
 				{
-					"name" : "W[3]",
+					"name" : "W[5]",
 					"strict" : false
 				}
 			]

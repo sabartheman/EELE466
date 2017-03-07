@@ -1,5 +1,5 @@
 Analysis & Synthesis report for rsr
-Tue Feb 28 13:55:23 2017
+Mon Feb 27 23:55:00 2017
 Quartus Prime Version 16.0.0 Build 211 04/27/2016 SJ Standard Edition
 
 
@@ -22,11 +22,9 @@ Quartus Prime Version 16.0.0 Build 211 04/27/2016 SJ Standard Edition
  14. Source assignments for guess:A1|ROM1:romlookup|altsyncram:altsyncram_component|altsyncram_rk24:auto_generated
  15. Parameter Settings for User Entity Instance: guess:A1|ROM1:romlookup|altsyncram:altsyncram_component
  16. altsyncram Parameter Settings by Entity Instance
- 17. Port Connectivity Checks: "iterations:A2|Newtons_method:\Gen_latch:3:Finalloop:A3"
- 18. Port Connectivity Checks: "iterations:A2|Newtons_method:\Gen_latch:0:Firstloop:A0"
- 19. Post-Synthesis Netlist Statistics for Top Partition
- 20. Elapsed Time Per Partition
- 21. Analysis & Synthesis Messages
+ 17. Post-Synthesis Netlist Statistics for Top Partition
+ 18. Elapsed Time Per Partition
+ 19. Analysis & Synthesis Messages
 
 
 
@@ -53,7 +51,7 @@ agreement for further details.
 +-----------------------------------------------------------------------------------+
 ; Analysis & Synthesis Summary                                                      ;
 +---------------------------------+-------------------------------------------------+
-; Analysis & Synthesis Status     ; Successful - Tue Feb 28 13:55:23 2017           ;
+; Analysis & Synthesis Status     ; Successful - Mon Feb 27 23:55:00 2017           ;
 ; Quartus Prime Version           ; 16.0.0 Build 211 04/27/2016 SJ Standard Edition ;
 ; Revision Name                   ; rsr                                             ;
 ; Top-level Entity Name           ; rsr                                             ;
@@ -63,7 +61,7 @@ agreement for further details.
 ; Total pins                      ; 69                                              ;
 ; Total virtual pins              ; 0                                               ;
 ; Total block memory bits         ; 2,048                                           ;
-; Total DSP Blocks                ; 158                                             ;
+; Total DSP Blocks                ; 69                                              ;
 ; Total HSSI RX PCSs              ; 0                                               ;
 ; Total HSSI PMA RX Deserializers ; 0                                               ;
 ; Total HSSI TX PCSs              ; 0                                               ;
@@ -210,14 +208,14 @@ agreement for further details.
 +---------------------------------------------+-----------------+
 ; Resource                                    ; Usage           ;
 +---------------------------------------------+-----------------+
-; Estimate of Logic utilization (ALMs needed) ; 2410            ;
+; Estimate of Logic utilization (ALMs needed) ; 892             ;
 ;                                             ;                 ;
-; Combinational ALUT usage for logic          ; 4639            ;
+; Combinational ALUT usage for logic          ; 1597            ;
 ;     -- 7 input functions                    ; 0               ;
-;     -- 6 input functions                    ; 173             ;
-;     -- 5 input functions                    ; 36              ;
-;     -- 4 input functions                    ; 23              ;
-;     -- <=3 input functions                  ; 4407            ;
+;     -- 6 input functions                    ; 178             ;
+;     -- 5 input functions                    ; 30              ;
+;     -- 4 input functions                    ; 24              ;
+;     -- <=3 input functions                  ; 1365            ;
 ;                                             ;                 ;
 ; Dedicated logic registers                   ; 67              ;
 ;                                             ;                 ;
@@ -225,12 +223,12 @@ agreement for further details.
 ; Total MLAB memory bits                      ; 0               ;
 ; Total block memory bits                     ; 2048            ;
 ;                                             ;                 ;
-; Total DSP Blocks                            ; 158             ;
+; Total DSP Blocks                            ; 69              ;
 ;                                             ;                 ;
 ; Maximum fan-out node                        ; guess:A1|Add2~1 ;
-; Maximum fan-out                             ; 82              ;
-; Total fan-out                               ; 18983           ;
-; Average fan-out                             ; 3.79            ;
+; Maximum fan-out                             ; 83              ;
+; Total fan-out                               ; 7311            ;
+; Average fan-out                             ; 3.89            ;
 +---------------------------------------------+-----------------+
 
 
@@ -239,17 +237,17 @@ agreement for further details.
 +---------------------------------------------------+-------------------+--------------+-------------------+------------+------+--------------+---------------------------------------------------------------------------------------------+-----------------+--------------+
 ; Compilation Hierarchy Node                        ; LC Combinationals ; LC Registers ; Block Memory Bits ; DSP Blocks ; Pins ; Virtual Pins ; Full Hierarchy Name                                                                         ; Entity Name     ; Library Name ;
 +---------------------------------------------------+-------------------+--------------+-------------------+------------+------+--------------+---------------------------------------------------------------------------------------------+-----------------+--------------+
-; |rsr                                              ; 4639 (0)          ; 67 (40)      ; 2048              ; 158        ; 69   ; 0            ; |rsr                                                                                        ; rsr             ; work         ;
-;    |guess:A1|                                     ; 292 (269)         ; 27 (0)       ; 2048              ; 5          ; 0    ; 0            ; |rsr|guess:A1                                                                               ; guess           ; work         ;
+; |rsr                                              ; 1597 (0)          ; 67 (40)      ; 2048              ; 69         ; 69   ; 0            ; |rsr                                                                                        ; rsr             ; work         ;
+;    |guess:A1|                                     ; 293 (271)         ; 27 (0)       ; 2048              ; 5          ; 0    ; 0            ; |rsr|guess:A1                                                                               ; guess           ; work         ;
 ;       |ROM1:romlookup|                            ; 0 (0)             ; 0 (0)        ; 2048              ; 0          ; 0    ; 0            ; |rsr|guess:A1|ROM1:romlookup                                                                ; ROM1            ; work         ;
 ;          |altsyncram:altsyncram_component|        ; 0 (0)             ; 0 (0)        ; 2048              ; 0          ; 0    ; 0            ; |rsr|guess:A1|ROM1:romlookup|altsyncram:altsyncram_component                                ; altsyncram      ; work         ;
 ;             |altsyncram_rk24:auto_generated|      ; 0 (0)             ; 0 (0)        ; 2048              ; 0          ; 0    ; 0            ; |rsr|guess:A1|ROM1:romlookup|altsyncram:altsyncram_component|altsyncram_rk24:auto_generated ; altsyncram_rk24 ; work         ;
-;       |lzc:A1|                                    ; 23 (23)           ; 27 (27)      ; 0                 ; 0          ; 0    ; 0            ; |rsr|guess:A1|lzc:A1                                                                        ; lzc             ; work         ;
-;    |iterations:A2|                                ; 4347 (0)          ; 0 (0)        ; 0                 ; 153        ; 0    ; 0            ; |rsr|iterations:A2                                                                          ; iterations      ; work         ;
-;       |Newtons_method:\Gen_latch:0:Firstloop:A0|  ; 1109 (1109)       ; 0 (0)        ; 0                 ; 39         ; 0    ; 0            ; |rsr|iterations:A2|Newtons_method:\Gen_latch:0:Firstloop:A0                                 ; Newtons_method  ; work         ;
-;       |Newtons_method:\Gen_latch:1:Secondloop:A1| ; 1109 (1109)       ; 0 (0)        ; 0                 ; 39         ; 0    ; 0            ; |rsr|iterations:A2|Newtons_method:\Gen_latch:1:Secondloop:A1                                ; Newtons_method  ; work         ;
-;       |Newtons_method:\Gen_latch:2:thirdloop:A2|  ; 1109 (1109)       ; 0 (0)        ; 0                 ; 39         ; 0    ; 0            ; |rsr|iterations:A2|Newtons_method:\Gen_latch:2:thirdloop:A2                                 ; Newtons_method  ; work         ;
-;       |Newtons_method:\Gen_latch:3:Finalloop:A3|  ; 1020 (1020)       ; 0 (0)        ; 0                 ; 36         ; 0    ; 0            ; |rsr|iterations:A2|Newtons_method:\Gen_latch:3:Finalloop:A3                                 ; Newtons_method  ; work         ;
+;       |lzc:A1|                                    ; 22 (22)           ; 27 (27)      ; 0                 ; 0          ; 0    ; 0            ; |rsr|guess:A1|lzc:A1                                                                        ; lzc             ; work         ;
+;    |iterations:A2|                                ; 1304 (0)          ; 0 (0)        ; 0                 ; 64         ; 0    ; 0            ; |rsr|iterations:A2                                                                          ; iterations      ; work         ;
+;       |Newtons_method:\Gen_latch:0:Firstloop:A0|  ; 326 (326)         ; 0 (0)        ; 0                 ; 16         ; 0    ; 0            ; |rsr|iterations:A2|Newtons_method:\Gen_latch:0:Firstloop:A0                                 ; Newtons_method  ; work         ;
+;       |Newtons_method:\Gen_latch:1:Secondloop:A1| ; 326 (326)         ; 0 (0)        ; 0                 ; 16         ; 0    ; 0            ; |rsr|iterations:A2|Newtons_method:\Gen_latch:1:Secondloop:A1                                ; Newtons_method  ; work         ;
+;       |Newtons_method:\Gen_latch:2:thirdloop:A2|  ; 326 (326)         ; 0 (0)        ; 0                 ; 16         ; 0    ; 0            ; |rsr|iterations:A2|Newtons_method:\Gen_latch:2:thirdloop:A2                                 ; Newtons_method  ; work         ;
+;       |Newtons_method:\Gen_latch:3:Finalloop:A3|  ; 326 (326)         ; 0 (0)        ; 0                 ; 16         ; 0    ; 0            ; |rsr|iterations:A2|Newtons_method:\Gen_latch:3:Finalloop:A3                                 ; Newtons_method  ; work         ;
 +---------------------------------------------------+-------------------+--------------+-------------------+------------+------+--------------+---------------------------------------------------------------------------------------------+-----------------+--------------+
 Note: For table entries with two numbers listed, the numbers in parentheses indicate the number of resources of the given type used by the specific entity alone. The numbers listed outside of parentheses indicate the total resources of the given type used by the specific entity and all of its sub-entities in the hierarchy.
 
@@ -269,13 +267,12 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 ; Statistic                         ; Number Used ;
 +-----------------------------------+-------------+
 ; Independent 9x9                   ; 1           ;
-; Two Independent 18x18             ; 89          ;
+; Two Independent 18x18             ; 46          ;
 ; Independent 18x18 plus 36         ; 2           ;
-; Sum of two 18x18                  ; 46          ;
-; Independent 27x27                 ; 20          ;
-; Total number of DSP blocks        ; 158         ;
+; Sum of two 18x18                  ; 20          ;
+; Total number of DSP blocks        ; 69          ;
 ;                                   ;             ;
-; Fixed Point Unsigned Multiplier   ; 202         ;
+; Fixed Point Unsigned Multiplier   ; 87          ;
 ; Fixed Point Mixed Sign Multiplier ; 2           ;
 +-----------------------------------+-------------+
 
@@ -331,13 +328,13 @@ Note: All latches listed above may not be present at the end of synthesis due to
 ; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |rsr|guess:A1|ShiftRight0  ;
 ; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |rsr|guess:A1|ShiftRight0  ;
 ; 4:1                ; 7 bits    ; 14 LEs        ; 14 LEs               ; 0 LEs                  ; No         ; |rsr|guess:A1|ShiftLeft1   ;
-; 9:1                ; 8 bits    ; 48 LEs        ; 48 LEs               ; 0 LEs                  ; No         ; |rsr|guess:A1|Xa[18]       ;
-; 9:1                ; 8 bits    ; 48 LEs        ; 48 LEs               ; 0 LEs                  ; No         ; |rsr|guess:A1|Xa[10]       ;
-; 12:1               ; 4 bits    ; 32 LEs        ; 32 LEs               ; 0 LEs                  ; No         ; |rsr|guess:A1|Xa[27]       ;
+; 9:1                ; 8 bits    ; 48 LEs        ; 48 LEs               ; 0 LEs                  ; No         ; |rsr|guess:A1|Xa[22]       ;
+; 9:1                ; 8 bits    ; 48 LEs        ; 48 LEs               ; 0 LEs                  ; No         ; |rsr|guess:A1|Xa[5]        ;
+; 12:1               ; 4 bits    ; 32 LEs        ; 32 LEs               ; 0 LEs                  ; No         ; |rsr|guess:A1|Xa[24]       ;
 ; 12:1               ; 4 bits    ; 32 LEs        ; 32 LEs               ; 0 LEs                  ; No         ; |rsr|guess:A1|Xa[15]       ;
-; 12:1               ; 4 bits    ; 32 LEs        ; 32 LEs               ; 0 LEs                  ; No         ; |rsr|guess:A1|Xa[0]        ;
+; 12:1               ; 4 bits    ; 32 LEs        ; 32 LEs               ; 0 LEs                  ; No         ; |rsr|guess:A1|Xa[1]        ;
 ; 14:1               ; 2 bits    ; 18 LEs        ; 18 LEs               ; 0 LEs                  ; No         ; |rsr|guess:A1|Xb[13]       ;
-; 17:1               ; 2 bits    ; 22 LEs        ; 20 LEs               ; 2 LEs                  ; No         ; |rsr|guess:A1|Xb[7]        ;
+; 17:1               ; 2 bits    ; 22 LEs        ; 20 LEs               ; 2 LEs                  ; No         ; |rsr|guess:A1|Xb[6]        ;
 +--------------------+-----------+---------------+----------------------+------------------------+------------+----------------------------+
 
 
@@ -431,26 +428,6 @@ Note: In order to hide this table in the UI and the text report file, please set
 +-------------------------------------------+---------------------------------------------------------+
 
 
-+-----------------------------------------------------------------------------------------------------------------------------+
-; Port Connectivity Checks: "iterations:A2|Newtons_method:\Gen_latch:3:Finalloop:A3"                                          ;
-+-------------------+--------+----------+-------------------------------------------------------------------------------------+
-; Port              ; Type   ; Severity ; Details                                                                             ;
-+-------------------+--------+----------+-------------------------------------------------------------------------------------+
-; yguessout[55..42] ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
-; yguessout[13..0]  ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
-+-------------------+--------+----------+-------------------------------------------------------------------------------------+
-
-
-+------------------------------------------------------------------------------------+
-; Port Connectivity Checks: "iterations:A2|Newtons_method:\Gen_latch:0:Firstloop:A0" ;
-+-------------+-------+----------+---------------------------------------------------+
-; Port        ; Type  ; Severity ; Details                                           ;
-+-------------+-------+----------+---------------------------------------------------+
-; yin[55..42] ; Input ; Info     ; Stuck at GND                                      ;
-; yin[13..0]  ; Input ; Info     ; Stuck at GND                                      ;
-+-------------+-------+----------+---------------------------------------------------+
-
-
 +-----------------------------------------------------+
 ; Post-Synthesis Netlist Statistics for Top Partition ;
 +-----------------------+-----------------------------+
@@ -458,31 +435,30 @@ Note: In order to hide this table in the UI and the text report file, please set
 +-----------------------+-----------------------------+
 ; arriav_ff             ; 67                          ;
 ;     plain             ; 67                          ;
-; arriav_lcell_comb     ; 4639                        ;
-;     arith             ; 2699                        ;
-;         0 data inputs ; 6                           ;
-;         1 data inputs ; 869                         ;
-;         2 data inputs ; 1809                        ;
-;         3 data inputs ; 9                           ;
+; arriav_lcell_comb     ; 1597                        ;
+;     arith             ; 927                         ;
+;         1 data inputs ; 236                         ;
+;         2 data inputs ; 682                         ;
+;         3 data inputs ; 3                           ;
 ;         4 data inputs ; 5                           ;
 ;         5 data inputs ; 1                           ;
-;     normal            ; 270                         ;
-;         2 data inputs ; 13                          ;
-;         3 data inputs ; 31                          ;
-;         4 data inputs ; 18                          ;
-;         5 data inputs ; 35                          ;
-;         6 data inputs ; 173                         ;
-;     shared            ; 1670                        ;
-;         0 data inputs ; 99                          ;
-;         1 data inputs ; 278                         ;
-;         2 data inputs ; 1102                        ;
-;         3 data inputs ; 191                         ;
-; arriav_mac            ; 158                         ;
+;     normal            ; 271                         ;
+;         2 data inputs ; 12                          ;
+;         3 data inputs ; 33                          ;
+;         4 data inputs ; 19                          ;
+;         5 data inputs ; 29                          ;
+;         6 data inputs ; 178                         ;
+;     shared            ; 399                         ;
+;         0 data inputs ; 109                         ;
+;         1 data inputs ; 72                          ;
+;         2 data inputs ; 150                         ;
+;         3 data inputs ; 68                          ;
+; arriav_mac            ; 69                          ;
 ; boundary_port         ; 69                          ;
 ; stratixv_ram_block    ; 8                           ;
 ;                       ;                             ;
-; Max LUT depth         ; 16.10                       ;
-; Average LUT depth     ; 9.73                        ;
+; Max LUT depth         ; 8.60                        ;
+; Average LUT depth     ; 5.51                        ;
 +-----------------------+-----------------------------+
 
 
@@ -491,7 +467,7 @@ Note: In order to hide this table in the UI and the text report file, please set
 +----------------+--------------+
 ; Partition Name ; Elapsed Time ;
 +----------------+--------------+
-; Top            ; 00:00:05     ;
+; Top            ; 00:00:03     ;
 +----------------+--------------+
 
 
@@ -501,7 +477,7 @@ Note: In order to hide this table in the UI and the text report file, please set
 Info: *******************************************************************
 Info: Running Quartus Prime Analysis & Synthesis
     Info: Version 16.0.0 Build 211 04/27/2016 SJ Standard Edition
-    Info: Processing started: Tue Feb 28 13:55:06 2017
+    Info: Processing started: Mon Feb 27 23:54:45 2017
 Info: Command: quartus_map --read_settings_files=on --write_settings_files=off rsr -c rsr
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
 Info (20030): Parallel compilation is enabled and will use 4 of the 4 processors detected
@@ -631,16 +607,16 @@ Info (12128): Elaborating entity "Newtons_method" for hierarchy "iterations:A2|N
 Info (286030): Timing-Driven Synthesis is running
 Info (16010): Generating hard_block partition "hard_block:auto_generated_inst"
     Info (16011): Adding 0 node(s), including 0 DDIO, 0 PLL, 0 transceiver and 0 LCELL
-Info (21057): Implemented 4941 device resources after synthesis - the final resource count might be different
+Info (21057): Implemented 1810 device resources after synthesis - the final resource count might be different
     Info (21058): Implemented 41 input pins
     Info (21059): Implemented 28 output pins
-    Info (21061): Implemented 4706 logic cells
+    Info (21061): Implemented 1664 logic cells
     Info (21064): Implemented 8 RAM segments
-    Info (21062): Implemented 158 DSP elements
+    Info (21062): Implemented 69 DSP elements
 Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 4 warnings
-    Info: Peak virtual memory: 1005 megabytes
-    Info: Processing ended: Tue Feb 28 13:55:23 2017
-    Info: Elapsed time: 00:00:17
-    Info: Total CPU time (on all processors): 00:00:28
+    Info: Peak virtual memory: 948 megabytes
+    Info: Processing ended: Mon Feb 27 23:55:00 2017
+    Info: Elapsed time: 00:00:15
+    Info: Total CPU time (on all processors): 00:00:29
 
 
