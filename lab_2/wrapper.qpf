@@ -19,12 +19,20 @@
 #
 # Quartus Prime
 # Version 16.0.0 Build 211 04/27/2016 SJ Standard Edition
+<<<<<<< HEAD
 # Date created = 17:19:53  February 05, 2017
+=======
+# Date created = 17:58:25  February 05, 2017
+>>>>>>> 948e02363830d4f3af9ed51881cdd51cb0c833e9
 #
 # -------------------------------------------------------------------------- #
 
 QUARTUS_VERSION = "16.0"
+<<<<<<< HEAD
 DATE = "17:19:53  February 05, 2017"
+=======
+DATE = "17:58:25  February 05, 2017"
+>>>>>>> 948e02363830d4f3af9ed51881cdd51cb0c833e9
 
 # Revisions
 
