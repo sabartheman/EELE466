@@ -1,3 +1,7 @@
+library ieee;
+use ieee.std_logic_1164.all;
+
+
 entity wrapper is
 	port(
 
@@ -21,10 +25,10 @@ entity wrapper is
 		------------------------------
 		-- MMS
 		------------------------------
-		avs_s1_address		:in  std_logic_vector(7 downto 0);
+		avs_s1_address		:in  std_logic_vector(1 downto 0);
 		avs_s1_write 		:in  std_logic;
-		avs_s1_writedata    :in  std_logic_vector(31 downto 0);
-		avs_s1_read         :out std_logic;
+		avs_s1_writedata    	:in  std_logic_vector(31 downto 0);
+		avs_s1_read        	:in std_logic;
 		avs_s1_readdata		:out std_logic_vector(31 downto 0);
 
 		------------------------------
@@ -40,19 +44,20 @@ entity wrapper is
 	architecture wrapper_arch of wrapper is	
 	
 	--internal registers
-	signal reg1,reg2,reg3,reg4  :std_logic_vector(31 downto 0);
+	signal reg1,reg2,reg3,reg0  :std_logic_vector(31 downto 0);
 
 	--internal signals for handling data
 	signal data_in, data_out	:std_logic_vector(31 downto 0);
-
+	
+	signal dummy			:std_logic;
 
 	begin
 		
 	--process to write to the registers.
-	register_write : process(rising_edge(clk) && reset_n = '1' && avs_s1_write = '1')
+	register_write : process(clk, avs_s1_write)
 
 	begin
-		if(rising_edge(clk) && reset_n = '1' && avs_s1_write = '1') then
+		if(rising_edge(clk) AND avs_s1_write = '1') then
 			case avs_s1_address is
 				when "00" => reg0 <= avs_s1_writedata;
 
@@ -61,10 +66,12 @@ entity wrapper is
 				when "10" => reg2 <= avs_s1_writedata;
 
 				when "11" => reg3 <= avs_s1_writedata;
+	
+				when others => dummy <= '0';
 			end case;
 		end if;
 
-	end register_write;
+	end process;
 
 
 	--process to read from the registers
@@ -72,7 +79,7 @@ entity wrapper is
 
 	begin 
 
-		if(rising_edge(clk) && reset_n = '1' && avs_s1_read = '1')then
+		if(rising_edge(clk) AND avs_s1_read = '1')then
 			case avs_s1_address is
 				when "00" => avs_s1_readdata <= reg0;
 
@@ -81,21 +88,23 @@ entity wrapper is
 				when "10" => avs_s1_readdata <= reg2;
 
 				when "11" => avs_s1_readdata <= reg3;
+				
+				when others => dummy <= '1';
 			end case;
 		end if;
 
-	end register_read;
+	end process;
 
 	valid_sink : process(clk, ast_sink_valid)
 
 	begin
 
-		if(rising_edge(clk) && ast_sink_valid = '1') then
+		if(rising_edge(clk) AND ast_sink_valid = '1') then
 			data_in <= ast_sink_data;
 			ast_source_data <= data_out;
 		end if;
 
-	end valid_sink;
+	end process;
 
 
 		
