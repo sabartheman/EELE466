@@ -1,0 +1,88 @@
+m255
+K4
+z2
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 dC:/Users/s96s544/Desktop/EELE466-master/lab_6
+Efifo
+Z1 w1491330974
+Z2 DPx3 std 6 textio 0 22 zE1`LPoLg^DX3Oz^4Fj1K3
+Z3 DPx4 ieee 14 std_logic_1164 0 22 eNV`TJ_GofJTzYa?f<@Oe1
+R0
+Z4 8C:/Users/s96s544/Desktop/EELE466-master/lab_6/FIFO.vhd
+Z5 FC:/Users/s96s544/Desktop/EELE466-master/lab_6/FIFO.vhd
+l0
+L43
+Vk;moYBlM;o93BEUoXdZHb1
+!s100 6C6TP@JVTGQdF>_Kcmm[G0
+Z6 OL;C;10.5c;63
+32
+Z7 !s110 1492553542
+!i10b 1
+Z8 !s108 1492553542.000000
+Z9 !s90 -work|work|-2002|-explicit|-vopt|-stats=none|C:/Users/s96s544/Desktop/EELE466-master/lab_6/FIFO.vhd|
+Z10 !s107 C:/Users/s96s544/Desktop/EELE466-master/lab_6/FIFO.vhd|
+!i113 0
+Z11 o-work work -2002 -explicit
+Z12 tExplicit 1 CvgOpt 0
+Asyn
+R2
+R3
+DEx4 work 4 fifo 0 22 k;moYBlM;o93BEUoXdZHb1
+32
+R7
+l89
+L57
+VD]<O8CI5^eai^<e0fKe8@1
+!s100 VT82Pc<?L;chLoE5@4SEa2
+R6
+!i10b 1
+R8
+R9
+R10
+!i113 0
+R11
+R12
+Ewrapper
+Z13 w1492553506
+R2
+R3
+R0
+Z14 8C:/Users/s96s544/Desktop/EELE466-master/lab_6/wrapper.vhd
+Z15 FC:/Users/s96s544/Desktop/EELE466-master/lab_6/wrapper.vhd
+l0
+L5
+V:_5BzC]d<b10_2c>S?<[n2
+!s100 06C;c=eHXhIPS^`dC99Nj1
+R6
+32
+R7
+!i10b 1
+R8
+Z16 !s90 -work|work|-2002|-explicit|-vopt|-stats=none|C:/Users/s96s544/Desktop/EELE466-master/lab_6/wrapper.vhd|
+Z17 !s107 C:/Users/s96s544/Desktop/EELE466-master/lab_6/wrapper.vhd|
+!i113 0
+R11
+R12
+Awrapper_arch
+R2
+R3
+DEx4 work 7 wrapper 0 22 :_5BzC]d<b10_2c>S?<[n2
+32
+R7
+l117
+L52
+Vz3:;ZjIQ:<MXC[WcTZae^2
+!s100 iFOLUHF>:z7M9j24eg=0;0
+R6
+!i10b 1
+R8
+R16
+R17
+!i113 0
+R11
+R12

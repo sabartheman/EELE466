@@ -1,0 +1,155 @@
+----------------------------------------------------------------------------------
+--
+-- Company:          Montana State University
+-- Author/Engineer:	Ross K. Snider
+--
+-- Create Date:      04/08/2012
+--
+-- Design Name:      WM8731_top_level_test.vhd  
+--       				
+-- Description:      This component will test the component WM8731.vhd 
+--							The WM8731 component does the following:
+--									1. Initializes all the WM8731 registers
+--									2. Allows individual register writes (to change volume, etc.)
+--                         3. Provids a simple interface for reading & writing CODEC data
+--							The registers are initialized so that the WM8731 operates in Master Mode
+--                   with a 96 KHz sample rate and 24-bit data (2's complement).
+--
+-- Target Devices:   Altera DE2 Evaluation Board
+-- Tool versions:    Quartus II 11.1
+--
+-- Dependencies:     WM8731.vhd
+--                       1.0 WM8731_Control.vhd
+--							    1.1 WM8731_I2C_RegWrite.vhd
+--                       2.0 WM8731_Data.vhd
+-- Revisions:        1.0 (File Created)
+--
+-- Additional Comments: 
+----------------------------------------------------------------------------------
+
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.STD_LOGIC_ARITH.ALL;
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
+
+entity WM8731 is
+	port
+	(	
+		clk			: in std_logic; -- Assumed to be a 50 MHz clock from the DE2 board
+		reset       : in std_logic;
+		-----------------------------------------------------------------------
+		-- Interface Signals to & from the WM8731 physical pins
+		-----------------------------------------------------------------------
+		-- I2C Serial Bus
+		I2C_SCLK    : out   std_logic;  		-- I2C Clock (to WM8731 pin SCLK)
+		I2C_SDAT    : inout std_logic;	  	-- I2C Data  (to WM8731 pin SDIN)
+		-- WM8731 Audio Codec signals
+		MCLK    : in   std_logic;  -- Audio CODEC System Clock AUD_XCK (Needs to be the same clock as being sent to the WM8731 pin MCLK/XTI)
+		BCLK    : in   std_logic;  -- Audio CODEC Bit-Stream Clock     (to WM8731 pin BCLK)
+		ADCLRC  : in   std_logic;  -- Audio CODEC ADC LR Clock         (to WM8731 pin ADCLRCK)
+		ADCDAT  : in   std_logic;  -- Audio CODEC ADC Data             (to WM8731 pin ADCDAT)
+		DACLRC  : in   std_logic;  -- Audio CODEC DAC LR Clock         (to WM8731 pin DACLRCK)
+		DACDAT  : out  std_logic;  -- Audio CODEC DAC Data             (to WM8731 pin DACDAT)
+		-----------------------------------------------------------------------
+		-- Interface to write WM8731 register data
+		-----------------------------------------------------------------------
+		WM8731_RegAddr				: in 		std_logic_vector (6 downto 0); -- Address of WM8731 Register that the data will be written to
+		WM8731_RegData				: in 		std_logic_vector (8 downto 0); -- Data to be written to WM8731 Register
+		WM8731_RegWrite_Start	: in 		std_logic;  -- Initiates the register write
+		WM8731_RegWrite_Done		: out 	std_logic;  -- A pulse of one clk period indicates that the register write has completed
+		-----------------------------------------------------------------------------------------------------------
+		-- Interface for reading and writing WM8731 ADC/DAC (sample) 24-bit data (data is in 2's complement form)
+		-----------------------------------------------------------------------------------------------------------
+		WM8731_Data_from_ADC_Left  : out std_logic_vector (23 downto 0); 
+		WM8731_Data_from_ADC_Right : out std_logic_vector (23 downto 0); 
+		WM8731_Data_from_ADC_ready : out std_logic; -- pulse 1 BCLK period wide signifying data is ready to read (this pulse occurs at the sample rate, i.e. Fs) 				
+		WM8731_Data_to_DAC_Left    : in std_logic_vector (23 downto 0); -- On the rising edge of the DACLRC Pulse, these output registers will be captured into an internal register and send out DACDAT
+		WM8731_Data_to_DAC_Right   : in std_logic_vector (23 downto 0)
+		
+	);
+end WM8731;
+
+architecture behavioral of WM8731 is
+	
+	------------------------------------------------------------------------------------------
+	-- WM8731_Control
+	-- Component that initializes the WM8731 register settings and then allows
+	-- individual register writes by placing the register address in WM8731_RegAddr
+	-- and the register data in WM8731_RegData.  The write is initiated by a pulse
+	-- one clock period wide on Start.  The write is completed with the Done pulse shows up.
+	-------------------------------------------------------------------------------------------
+	component WM8731_Control 
+		port (
+				clk		     		: in 	std_logic;     -- DE2 board system 50 MHz clock
+				reset 		  		: in		std_logic;  -- DE2 system reset
+				I2C_SDAT    		: inout 	std_logic;  -- I2C Data to SDIN pin on WM8731, (see 2-wire control section on page 43 of data sheet, Figure 33 & Table 25)
+				I2C_SCLK    		: out   	std_logic;  -- I2C Clock to SCLK pin on WM8731, NOTE: Max frequency = 400 KHz (see table on page 17 of data sheet)
+				WM8731_RegAddr		: in 		std_logic_vector (6 downto 0); -- Address of WM8731 Register that the data will be written to
+				WM8731_RegData		: in 		std_logic_vector (8 downto 0); -- Data to be written to WM8731 Register
+				Start					: in 		std_logic;  -- Initiate the I2C data transfer, should be a pulse of one clk period
+				Done					: out 	std_logic  	-- Sends a pulse of one clk period indicating that the transfer has completed
+		 );
+	end component;
+	
+	component WM8731_Data 
+		port (
+				clk		: 	in 	std_logic;  -- DE2 board system 50 MHz clock 
+				reset 	: 	in		std_logic;  -- DE2 system reset				
+				-- WM8731 serial data signals
+				BCLK	 	: 	in 	std_logic;  -- Bit Clock coming from WM8731 (Master Mode - See figure 30 p. 37 of WM8731 datasheet) 
+				ADCLRC 	:  in 	std_logic;  -- Pulse 1 BCLK wide signifying start of data (DSP Mode - See figure 29 p. 34 of WM8731 datasheet)
+				ADCDAT 	: 	in		std_logic;  -- Serial data from ADC (Bit length assumed to be 24 bits, bit length set in IWL in register 7, see table on p. 50 of datasheet) 
+				DACLRC 	:  in 	std_logic;  -- Pulse 1 BCLK wide signifying start of data capture (DSP Mode - See figure 29 p. 34 of WM8731 datasheet)
+				DACDAT 	: 	out	std_logic;  -- Serial data to DAC (Bit length assumed to be 24 bits, bit length set in IWL in register 7, see table on p. 50 of datasheet) 
+				-- Data from ADC (in 2's complement form)
+				WM8731_Data_from_ADC_Left  : out std_logic_vector (23 downto 0); 
+				WM8731_Data_from_ADC_Right : out std_logic_vector (23 downto 0); 
+				WM8731_Data_from_ADC_ready : out std_logic; -- pulse 1 BCLK period wide signifying data is ready to read (this pulse occurs at the sample rate, i.e. Fs) 				
+				-- Data to DAC (in 2's complement form)
+				WM8731_Data_to_DAC_Left  : in std_logic_vector (23 downto 0); -- On the rising edge of the DACLRC Pulse, these output registers will be captured into an internal register and send out DACDAT
+				WM8731_Data_to_DAC_Right : in std_logic_vector (23 downto 0)
+		 );
+	end component;
+				
+begin
+
+	--------------------------------------------------------------------------------------
+	-- Component that initializes the register settings.
+	-- See the component code that describes how to change the initial register settings
+	--------------------------------------------------------------------------------------
+	u2: WM8731_Control 
+	port map (
+			clk		     	=> clk,
+			reset 		  	=> reset,
+			I2C_SDAT    	=> I2C_SDAT,
+			I2C_SCLK    	=> I2C_SCLK,
+			WM8731_RegAddr	=> WM8731_RegAddr,
+			WM8731_RegData => WM8731_RegData,
+			Start				=> WM8731_RegWrite_Start,
+			Done				=>	WM8731_RegWrite_Done
+    );
+	
+	u3: WM8731_Data 
+	port map(
+			clk								=> MCLK,
+			reset 							=> reset,
+			BCLK	 							=> BCLK,
+			ADCLRC 							=> ADCLRC,
+			ADCDAT 							=> ADCDAT,
+			DACLRC 							=> DACLRC,
+			DACDAT 							=> DACDAT,
+			WM8731_Data_from_ADC_Left  => WM8731_Data_from_ADC_Left,
+			WM8731_Data_from_ADC_Right => WM8731_Data_from_ADC_Right,
+			WM8731_Data_from_ADC_ready => WM8731_Data_from_ADC_ready,
+			WM8731_Data_to_DAC_Left  	=> WM8731_Data_to_DAC_Left,
+			WM8731_Data_to_DAC_Right 	=> WM8731_Data_to_DAC_Right
+	);
+		
+end behavioral;
+	
+	
+	
+	
+	
+	
+	

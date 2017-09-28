@@ -1,0 +1,35 @@
+
+State Machine - |DE0_SOC_NoHPS_Top_Level|AD1939:u1|AD1939_control:u1|current_state
+Name current_state.SPIReadCapture current_state.SPIReadWait current_state.SPIReadStart current_state.SPIReadSetup current_state.SPIWriteBusy current_state.SPIWriteStart current_state.SPIWriteLoad current_state.SPIWait current_state.ROMProgNext current_state.ROMProgBusy current_state.ROMProgRegStart current_state.ROMLoadRegData current_state.ROMLoadAddrData current_state.PowerUpReset 
+current_state.PowerUpReset 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+current_state.ROMLoadAddrData 0 0 0 0 0 0 0 0 0 0 0 0 1 1 
+current_state.ROMLoadRegData 0 0 0 0 0 0 0 0 0 0 0 1 0 1 
+current_state.ROMProgRegStart 0 0 0 0 0 0 0 0 0 0 1 0 0 1 
+current_state.ROMProgBusy 0 0 0 0 0 0 0 0 0 1 0 0 0 1 
+current_state.ROMProgNext 0 0 0 0 0 0 0 0 1 0 0 0 0 1 
+current_state.SPIWait 0 0 0 0 0 0 0 1 0 0 0 0 0 1 
+current_state.SPIWriteLoad 0 0 0 0 0 0 1 0 0 0 0 0 0 1 
+current_state.SPIWriteStart 0 0 0 0 0 1 0 0 0 0 0 0 0 1 
+current_state.SPIWriteBusy 0 0 0 0 1 0 0 0 0 0 0 0 0 1 
+current_state.SPIReadSetup 0 0 0 1 0 0 0 0 0 0 0 0 0 1 
+current_state.SPIReadStart 0 0 1 0 0 0 0 0 0 0 0 0 0 1 
+current_state.SPIReadWait 0 1 0 0 0 0 0 0 0 0 0 0 0 1 
+current_state.SPIReadCapture 1 0 0 0 0 0 0 0 0 0 0 0 0 1 
+
+State Machine - |DE0_SOC_NoHPS_Top_Level|AD1939:u1|AD1939_control:u1|spi_commands:spi_AD1939|cur_spi_state
+Name cur_spi_state.SPI_STATE_COMMAND_DONE_SIGNAL cur_spi_state.SPI_STATE_COMMAND_DONE cur_spi_state.SPI_STATE_DATA cur_spi_state.SPI_STATE_DATA_INITIAL cur_spi_state.SPI_STATE_ADDRESS cur_spi_state.SPI_STATE_COMMAND cur_spi_state.SPI_STATE_WAIT 
+cur_spi_state.SPI_STATE_WAIT 0 0 0 0 0 0 0 
+cur_spi_state.SPI_STATE_COMMAND 0 0 0 0 0 1 1 
+cur_spi_state.SPI_STATE_ADDRESS 0 0 0 0 1 0 1 
+cur_spi_state.SPI_STATE_DATA_INITIAL 0 0 0 1 0 0 1 
+cur_spi_state.SPI_STATE_DATA 0 0 1 0 0 0 1 
+cur_spi_state.SPI_STATE_COMMAND_DONE 0 1 0 0 0 0 1 
+cur_spi_state.SPI_STATE_COMMAND_DONE_SIGNAL 1 0 0 0 0 0 1 
+
+State Machine - |DE0_SOC_NoHPS_Top_Level|AD1939:u1|AD1939_control:u1|spi_commands:spi_AD1939|spi_abstract:spi_slave|cur_spi_state
+Name cur_spi_state.SPI_CSN cur_spi_state.SPI_CSN_DELAY cur_spi_state.SPI_SHIFT cur_spi_state.SPI_CS cur_spi_state.SPI_WAIT 
+cur_spi_state.SPI_WAIT 0 0 0 0 0 
+cur_spi_state.SPI_CS 0 0 0 1 1 
+cur_spi_state.SPI_SHIFT 0 0 1 0 1 
+cur_spi_state.SPI_CSN_DELAY 0 1 0 0 1 
+cur_spi_state.SPI_CSN 1 0 0 0 1 

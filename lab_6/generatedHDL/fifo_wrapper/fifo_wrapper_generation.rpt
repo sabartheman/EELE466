@@ -1,0 +1,33 @@
+Info: Starting: Create block symbol file (.bsf)
+Info: qsys-generate C:\Users\d57w762\Desktop\lab_6\generatedHDL\fifo_wrapper.qsys --block-symbol-file --output-directory=C:\Users\d57w762\Desktop\lab_6\generatedHDL\fifo_wrapper --family="Cyclone V" --part=5CSEMA4U23C6
+Progress: Loading generatedHDL/fifo_wrapper.qsys
+Progress: Reading input file
+Progress: Adding clk_0 [clock_source 16.0]
+Progress: Parameterizing module clk_0
+Progress: Adding fifo_wrapper_0 [fifo_wrapper 1.0]
+Progress: Parameterizing module fifo_wrapper_0
+Progress: Building connections
+Progress: Parameterizing connections
+Progress: Validating
+Progress: Done reading input file
+Info: qsys-generate succeeded.
+Info: Finished: Create block symbol file (.bsf)
+Info: 
+Info: Starting: Create HDL design files for synthesis
+Info: qsys-generate C:\Users\d57w762\Desktop\lab_6\generatedHDL\fifo_wrapper.qsys --synthesis=VHDL --output-directory=C:\Users\d57w762\Desktop\lab_6\generatedHDL\fifo_wrapper\synthesis --family="Cyclone V" --part=5CSEMA4U23C6
+Progress: Loading generatedHDL/fifo_wrapper.qsys
+Progress: Reading input file
+Progress: Adding clk_0 [clock_source 16.0]
+Progress: Parameterizing module clk_0
+Progress: Adding fifo_wrapper_0 [fifo_wrapper 1.0]
+Progress: Parameterizing module fifo_wrapper_0
+Progress: Building connections
+Progress: Parameterizing connections
+Progress: Validating
+Progress: Done reading input file
+Info: fifo_wrapper: Generating fifo_wrapper "fifo_wrapper" for QUARTUS_SYNTH
+Info: fifo_wrapper_0: "fifo_wrapper" instantiated fifo_wrapper "fifo_wrapper_0"
+Info: rst_controller: "fifo_wrapper" instantiated altera_reset_controller "rst_controller"
+Info: fifo_wrapper: Done "fifo_wrapper" with 3 modules, 5 files
+Info: qsys-generate succeeded.
+Info: Finished: Create HDL design files for synthesis

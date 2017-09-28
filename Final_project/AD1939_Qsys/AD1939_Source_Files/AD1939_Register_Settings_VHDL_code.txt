@@ -1,0 +1,12 @@
+-- Power-up register settings to be pasted into AD1939_control.vhd as signal constants
+-- Only non-default register settings on power-up are generated
+-- Date generated: 14-Sep-2016
+---------------- Cut VHDL Code Starting Here --------------------------
+--  AD1939 Register 1(Address=0) with non-default power-up settings:
+constant Reg00_Addr : std_logic_vector (4 downto 0) := "00000";
+constant Reg00_Data : std_logic_vector (7 downto 0) := "10000000";
+--  AD1939 Register 17(Address=16) with non-default power-up settings:
+constant Reg01_Addr : std_logic_vector (4 downto 0) := "10000";
+constant Reg01_Data : std_logic_vector (7 downto 0) := "11001000";
+--  Total number of registers to be written at power-up: 
+constant RegTotal   : std_logic_vector (3 downto 0) := "0010";

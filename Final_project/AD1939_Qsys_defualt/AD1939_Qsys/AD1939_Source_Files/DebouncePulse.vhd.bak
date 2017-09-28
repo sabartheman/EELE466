@@ -1,0 +1,52 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+--Debounce a pushbutton input signal and output a single synchronized pulse
+entity pulse_debounce is
+	port(pb	            : in std_logic;
+		clk_50MHz	    : in std_logic;
+		pb_single_pulse	: out std_logic
+		);
+end entity;
+
+architecture pulse_debounce_arch of pulse_debounce is
+
+	component debounce IS
+		PORT(pb, clock_100Hz 	: IN	STD_LOGIC;
+			 pb_debounced		: OUT	STD_LOGIC);
+	END component;
+
+	component onepulse IS
+	
+		PORT(PB_debounced, clock	: IN	STD_LOGIC;
+			PB_single_pulse		: OUT	STD_LOGIC);
+
+	END component;
+	
+	component clk_div IS
+
+		PORT
+		(
+			clock_50Mhz			: IN	STD_LOGIC;
+			clock_1MHz				: OUT	STD_LOGIC;
+			clock_100KHz			: OUT	STD_LOGIC;
+			clock_10KHz				: OUT	STD_LOGIC;
+			clock_1KHz				: OUT	STD_LOGIC;
+			clock_100Hz				: OUT	STD_LOGIC;
+			clock_10Hz				: OUT	STD_LOGIC;
+			clock_1Hz				: OUT	STD_LOGIC);
+	
+	END component;
+	
+	signal clk_1MHz, clk_100KHz, clk_10KHz, clk_1KHz, clk_100Hz, clk_10Hz, clk_1Hz	: std_logic;
+	signal debounced	: std_LOGIC;
+
+begin
+    --Divide the clocks, 100Hz clock needed for debouncer
+	clk_sync 		: clk_div  port map(clk_50MHz, clk_1MHz, clk_100KHz, clk_10KHz, clk_1KHz, clk_100Hz, clk_10Hz, clk_1Hz);
+    --Debounce the input pulse
+	debounce_unit	: debounce port map(pb, clk_100Hz, debounced);
+    --Output a single synchronized pulse from the debounced input signal
+	singlePulse		: onepulse port map(debounced, clk_50MHz, pb_single_pulse);
+
+end architecture;

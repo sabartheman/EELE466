@@ -1,0 +1,58 @@
+# Reading C:/modeltech64_10.5c/tcl/vsim/pref.tcl
+# //  ModelSim SE-64 10.5c Jul 21 2016
+# //
+# //  Copyright 1991-2016 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  ModelSim SE-64 and its associated documentation contain trade
+# //  secrets and commercial or financial information that are the property of
+# //  Mentor Graphics Corporation and are privileged, confidential,
+# //  and exempt from disclosure under the Freedom of Information Act,
+# //  5 U.S.C. Section 552. Furthermore, this information
+# //  is prohibited from disclosure under the Trade Secrets Act,
+# //  18 U.S.C. Section 1905.
+# //
+# do compile_and_launch.tcl
+# vsim fir_wrapper -t 1ns -novopt -foreign "matlabsysobjserver {C:/MATLAB/R2016a/toolbox/edalink/extensions/modelsim/windows64/liblfmhdls_gcc450.dll}  ; -socket 51283 " 
+# Start time: 03:17:50 on May 05,2017
+# ** Warning: (vsim-8891) All optimizations are turned off because the -novopt switch is in effect. This will cause your simulation to run very slowly. If you are using this switch to preserve visibility for Debug or PLI features please see the User's Manual section on Preserving Object Visibility with vopt.
+# Loading std.standard
+# Loading std.textio(body)
+# Loading ieee.std_logic_1164(body)
+# Loading ieee.numeric_std(body)
+# Loading work.fir_wrapper(arch)
+# Loading work.fir_filter(fir_arch)
+# Loading C:/MATLAB/R2016a/toolbox/edalink/extensions/modelsim/windows64/liblfmhdls_gcc450.dll
+# ** Warning: (vsim-WLF-5000) WLF file currently in use: vsim.wlf
+#           File in use by: s96s544  Hostname: BZ-ECE-CB539-01  ProcessID: 12488
+#           Attempting to use alternate WLF file "./wlft4ecais".
+# ** Warning: (vsim-WLF-5001) Could not open WLF file: vsim.wlf
+#           Using alternate file: ./wlft4ecais
+# done
+# Simulation halt requested by foreign interface.
+# done
+# Simulation halt requested by foreign interface.
+# done
+# Simulation halt requested by foreign interface.
+# done
+# Simulation halt requested by foreign interface.
+# done
+# Simulation halt requested by foreign interface.
+# done
+# Simulation halt requested by foreign interface.
+# done
+# Simulation halt requested by foreign interface.
+# done
+# Simulation halt requested by foreign interface.
+# done
+# Simulation halt requested by foreign interface.
+# done
+# Simulation halt requested by foreign interface.
+# done
+# Simulation halt requested by foreign interface.
+# done
+# Simulation halt requested by foreign interface.
+# done
+# Simulation halt requested by foreign interface.
+# End time: 11:05:59 on May 05,2017, Elapsed time: 7:48:09
+# Errors: 0, Warnings: 3

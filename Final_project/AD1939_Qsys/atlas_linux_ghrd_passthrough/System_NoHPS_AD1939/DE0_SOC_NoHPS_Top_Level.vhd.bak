@@ -1,0 +1,369 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.NUMERIC_STD.ALL;
+
+
+
+entity DE0_SOC_NoHPS_Top_Level is
+	port(
+		----------------------------------------
+		--  CLOCK Inputs
+		----------------------------------------
+		FPGA_CLK1_50  :  in std_logic;
+		FPGA_CLK2_50  :  in std_logic;
+		FPGA_CLK3_50  :  in std_logic;
+		----------------------------------------
+		--  Push Button Inputs (KEY) - 2 inputs
+		--  The KEY inputs produce a '0' when pressed (asserted)
+		--  and produce a '1' in the rest state
+		--  a better label for KEY would be Push_Button_n 
+		----------------------------------------
+		KEY : in std_logic_vector(1 downto 0);
+		----------------------------------------
+		--  Switch Inputs (SW) - 4 inputs
+		----------------------------------------
+		SW  : in std_logic_vector(3 downto 0);
+		----------------------------------------
+		--  LED Outputs - 8 outputs
+		----------------------------------------
+		LED : out std_logic_vector(7 downto 0);
+		----------------------------------------
+		--  GPIO
+		----------------------------------------
+		GPIO_0 : inout std_logic_vector(35 downto 0);
+		GPIO_1 : inout std_logic_vector(35 downto 0)
+	);
+end entity DE0_SOC_NoHPS_Top_Level;
+
+
+architecture DE0_SOC_NoHPS_arch of DE0_SOC_NoHPS_Top_Level is
+
+	component PLL1 is
+		port (
+			refclk   : in  std_logic := 'X'; -- clk         -- 50 MHz Reference Clock
+			rst      : in  std_logic := 'X'; -- reset       -- reset
+			outclk_0 : out std_logic;        -- clk         -- 100 MHz Clock
+			outclk_1 : out std_logic;        -- clk         --  50 MHz Clock
+			outclk_2 : out std_logic;        -- clk         --  10 MHz Clock
+			outclk_3 : out std_logic;        -- clk         --   5 MHz Clock
+			locked   : out std_logic         -- export      -- port driven high when the PLL acquires lock
+		);
+	end component PLL1;
+
+	component AD1939 is
+		port
+		(	
+		AD1939_SPI_CLK : in  std_logic; -- SPI Clock that must be < 10 MHz
+		reset          : in  std_logic; -- system reset
+		AD1939_MCLK    : out std_logic; -- 12.8 MHz Master Clock from AD1939 crystal
+		state_monitor  : out std_logic_vector (3 downto 0);  -- debug
+		----------------------------------------------------------------------------------------------------------------
+		-- Physical Layer : signals to SPI port
+		-- Signals to/from AD1939 SPI Control Port (data direction from AD1939 perspective), connection to physical pins on AD1939
+		-- 10 MHz CCLK max (see page 7 of AD1939 data sheet)
+		-- CIN data is 24-bits (see page 14 of AD1939 data sheet)
+		-- CLATCH_n must have pull-up resistor so that AD1939 recognizes presence of SPI controller on power-up
+		----------------------------------------------------------------------------------------------------------------
+		AD1939_SPI_CIN      : out std_logic;  		 -- SPI Control Data Input to AD1939 pin 30 CIN
+		AD1939_SPI_COUT     : in  std_logic;       -- SPI Control Data output from AD1939 pin 31 COUT
+		AD1939_SPI_CCLK     : out std_logic;       -- SPI Control Clock Input to AD1939 pin 34 CCLK
+		AD1939_SPI_CLATCH_n : out std_logic;       -- SPI Latch for control data, input to AD1939 pin 35 CLATCH_n (active low)
+		-------------------------------------------------------------------------------------------------------------------------------------
+		-- Physical Layer : signals to serial data port on AD1939
+		-- Signals to/from AD1939 Serial Data Port (from ADCs/to DACs), i.e. connection to physical pins on AD1939
+		-------------------------------------------------------------------------------------------------------------------------------------
+		AD1939_ADC_SDATA1          : in     std_logic;   -- Serial data from AD1939 pin 27 ASDATA1, ADC1 24-bit normal stereo serial mode
+		AD1939_ADC_SDATA2          : in     std_logic;   -- Serial data from AD1939 pin 26 ASDATA2, ADC2 24-bit normal stereo serial mode
+		AD1939_ADC_BCLK            : in     std_logic;   -- Serial data from AD1939 pin 28 ABCLK, Bit Clock for ADCs (Master Mode)
+		AD1939_ADC_LRCLK           : in     std_logic;   -- Serial data from AD1939 pin 29 ALRCLK, LR Clock for ADCs (Master Mode)
+		--
+		AD1939_DAC_SDATA1          : out    std_logic;   -- Serial data to AD1939 pin 20 DSDATA1, DAC1 24-bit normal stereo serial mode
+		AD1939_DAC_SDATA2          : out    std_logic;   -- Serial data to AD1939 pin 19 DSDATA2, DAC2 24-bit normal stereo serial mode
+		AD1939_DAC_SDATA3          : out    std_logic;   -- Serial data to AD1939 pin 18 DSDATA3, DAC3 24-bit normal stereo serial mode
+		AD1939_DAC_SDATA4          : out    std_logic;   -- Serial data to AD1939 pin 15 DSDATA4, DAC4 24-bit normal stereo serial mode
+		AD1939_DAC_BCLK            : out    std_logic;   -- Serial data to AD1939 pin 21 DBCLK, Bit Clock for DACs (Slave Mode)
+		AD1939_DAC_LRCLK           : out    std_logic;   -- Serial data to AD1939 pin 22 DLRCLK, LR Clock for DACs (Slave Mode)
+		----------------------------------------------------------------------------------------------------------------------------------------------------------------
+		-- Abstracted register interface to AD1939
+		-- Simple interface to read/write AD1939 register data
+		----------------------------------------------------------------------------------------------------------------------------------------------------------------
+		AD1939_Reg_Addr				: in 		std_logic_vector (4 downto 0);   -- Address of AD1939 Register to be read/written (there are 17 registers)
+		AD1939_Reg_Write_Data		: in 		std_logic_vector (7 downto 0);   -- Data to be written to AD1939 Register
+		AD1939_Reg_Write_Start  	: in 		std_logic;                       -- Initiates the register write when asserted, must be deasserted to return from busy
+		AD1939_Reg_Read_Data			: out		std_logic_vector (7 downto 0);   -- Data read from AD1939 Register
+		AD1939_Reg_Read_Start	   : in 		std_logic;                       -- Initiates the register read when asserted, must be deasserted to return from busy
+		AD1939_Reg_Read_Data_Ready	: out		std_logic;   							-- Clock pulse signifies data read from AD1939 Register and is ready to be captured
+		AD1939_Reg_Busy	         : out 	std_logic;                       -- read or write is occurring, any new read/write will be ignored 
+		-----------------------------------------------------------------------------------------------------------
+		-- Abstracted data channels, i.e. interface to data plane 
+		-- Interface for reading and writing AD1939 ADC/DAC (sample) 24-bit data (data is in 2's complement form)???
+		-----------------------------------------------------------------------------------------------------------
+		-- Data from ADCs
+		AD1939_Data_ADC1_Left   : out std_logic_vector (23 downto 0); 
+		AD1939_Data_ADC1_Right  : out std_logic_vector (23 downto 0); 
+		AD1939_Data_ADC2_Left   : out std_logic_vector (23 downto 0); 
+		AD1939_Data_ADC2_Right  : out std_logic_vector (23 downto 0); 
+		AD1939_Data_ADCs_ready  : out std_logic;                        -- pulse 1 BCLK period wide signifies data is ready to read from ADCs (this pulse occurs at the sample rate Fs) 	
+      --	Data to DACs	
+		AD1939_Data_DAC1_Left   : in std_logic_vector (23 downto 0);    -- On the rising edge of the DAC_LRCLK, these DAC signals will be captured 
+		AD1939_Data_DAC1_Right  : in std_logic_vector (23 downto 0); 
+		AD1939_Data_DAC2_Left   : in std_logic_vector (23 downto 0); 
+		AD1939_Data_DAC2_Right  : in std_logic_vector (23 downto 0); 
+		AD1939_Data_DAC3_Left   : in std_logic_vector (23 downto 0); 
+		AD1939_Data_DAC3_Right  : in std_logic_vector (23 downto 0); 
+		AD1939_Data_DAC4_Left   : in std_logic_vector (23 downto 0); 
+		AD1939_Data_DAC4_Right  : in std_logic_vector (23 downto 0)
+		);
+	end component;	
+	
+	component Audio_Processing is
+	port
+	(	
+		AD1939_MCLK    : in std_logic; -- 12.8 MHz Master Clock from AD1939 crystal
+		-----------------------------------------------------------------------------------------------------------
+		-- Abstracted data channels, i.e. interface to data plane 
+		-- Interface for reading and writing AD1939 ADC/DAC (sample) 24-bit data (data is in 2's complement form)???
+		-----------------------------------------------------------------------------------------------------------
+		-- Data from ADCs
+		AD1939_Data_ADC1_Left   : in std_logic_vector (23 downto 0); 
+		AD1939_Data_ADC1_Right  : in std_logic_vector (23 downto 0); 
+		AD1939_Data_ADC2_Left   : in std_logic_vector (23 downto 0); 
+		AD1939_Data_ADC2_Right  : in std_logic_vector (23 downto 0); 
+		AD1939_Data_ADCs_ready  : in std_logic;                        -- pulse 1 BCLK period wide signifies data is ready to read from input audio bus channels 	
+      --	Data to DACs	
+		AD1939_Data_DAC1_Left   : out std_logic_vector (23 downto 0);    -- On the rising edge of the DAC_LRCLK, these DAC signals will be captured 
+		AD1939_Data_DAC1_Right  : out std_logic_vector (23 downto 0); 
+		AD1939_Data_DAC2_Left   : out std_logic_vector (23 downto 0); 
+		AD1939_Data_DAC2_Right  : out std_logic_vector (23 downto 0); 
+		AD1939_Data_DAC3_Left   : out std_logic_vector (23 downto 0); 
+		AD1939_Data_DAC3_Right  : out std_logic_vector (23 downto 0); 
+		AD1939_Data_DAC4_Left   : out std_logic_vector (23 downto 0); 
+		AD1939_Data_DAC4_Right  : out std_logic_vector (23 downto 0)
+	);
+	end component;
+	
+--	component DebouncePulse is
+--	port(
+--		clk      	    			: in  std_logic;  -- 50 MHz clock input assumed.  If different, change input_clock_divider below to generate the 1 Mhz clock correctly
+--		push_button	            : in  std_logic;  -- push button input will be debounced
+--		single_pulse            : out std_logic   -- pulse of 1 clock cycle sent out when push button is pressed
+--		);
+--	end component DebouncePulse;
+
+	
+--	component OnePulse is
+--	port(
+--		clk      	    			: in  std_logic;  
+--		push_button	            : in  std_logic;  
+--		single_pulse            : out std_logic   -- pulse of 1 clock cycle sent out when push button is pressed
+--		);
+--	end component;
+--
+	
+	---------------------------------------------------------
+	-- Signal declarations
+	---------------------------------------------------------
+	signal CLK_100    : std_logic;
+	signal CLK_50     : std_logic;
+	signal CLK_10     : std_logic;
+	signal CLK_5      : std_logic;
+	signal system_rst : std_logic;
+	signal single_pulse : std_logic;
+	signal Push_Button : std_logic_vector(1 downto 0);  -- a better description of KEY input, which should really be labelled as KEY_n
+
+
+	-----------------------------------------------------------------------------------------------------
+	-- AD1939 SPI physical signals
+   -----------------------------------------------------------------------------------------------------
+	signal   AD1939_spi_CIN 				  : std_logic;  							-- AD1939 SPI signal = data to AD1939 SPI registers
+	signal   AD1939_spi_COUT 				  : std_logic;  							-- AD1939 SPI signal = data from AD1939 SPI registers
+	signal   AD1939_spi_CCLK 				  : std_logic;  							-- AD1939 SPI signal = sclk: serial clock
+	signal   AD1939_spi_CLATCH_n 			  : std_logic;  							-- AD1939 SPI signal = ss_n: slave select (active low)
+	-----------------------------------------------------------------------------------------------------
+	-- AD1939 Serial data physical signals
+   -----------------------------------------------------------------------------------------------------
+	signal   AD1939_ADC_SDATA1          : std_logic;   -- Serial data from AD1939 pin 27 ASDATA1, ADC1 24-bit normal stereo serial mode
+	signal   AD1939_ADC_SDATA2          : std_logic;   -- Serial data from AD1939 pin 26 ASDATA2, ADC2 24-bit normal stereo serial mode
+	signal   AD1939_ADC_BCLK            : std_logic;   -- Serial data from AD1939 pin 28 ABCLK, Bit Clock for ADCs (Master Mode)
+	signal   AD1939_ADC_LRCLK           : std_logic;   -- Serial data from AD1939 pin 29 ALRCLK, LR Clock for ADCs (Master Mode)
+	signal   AD1939_DAC_SDATA1          : std_logic;   -- Serial data to AD1939 pin 20 DSDATA1, DAC1 24-bit normal stereo serial mode
+	signal   AD1939_DAC_SDATA2          : std_logic;   -- Serial data to AD1939 pin 19 DSDATA2, DAC2 24-bit normal stereo serial mode
+	signal   AD1939_DAC_SDATA3          : std_logic := '0';   -- Serial data to AD1939 pin 18 DSDATA3, DAC3 24-bit normal stereo serial mode
+	signal   AD1939_DAC_SDATA4          : std_logic := '0';   -- Serial data to AD1939 pin 15 DSDATA4, DAC4 24-bit normal stereo serial mode
+	signal   AD1939_DAC_BCLK            : std_logic;   -- Serial data to AD1939 pin 21 DBCLK, Bit Clock for DACs (Slave Mode)
+	signal   AD1939_DAC_LRCLK           : std_logic;   -- Serial data to AD1939 pin 22 DLRCLK, LR Clock for DACs (Slave Mode)
+	signal   AD1939_HDR1_MCLK           : std_logic;   
+	-----------------------------------------------------------------------------------------------------
+	-- Data plane audio bus signals 
+   -----------------------------------------------------------------------------------------------------
+	signal   AD1939_Data_ADC1_Left   : std_logic_vector (23 downto 0); 
+	signal   AD1939_Data_ADC1_Right  : std_logic_vector (23 downto 0); 
+	signal   AD1939_Data_ADC2_Left   : std_logic_vector (23 downto 0); 
+	signal   AD1939_Data_ADC2_Right  : std_logic_vector (23 downto 0); 
+	signal   AD1939_Data_ADCs_ready  : std_logic;                        -- pulse 1 BCLK period wide signifies data is ready to read from ADCs (this pulse occurs at the sample rate Fs) 	
+	signal   AD1939_Data_DAC1_Left   : std_logic_vector (23 downto 0);    -- On the rising edge of the DAC_LRCLK, these DAC signals will be captured 
+	signal   AD1939_Data_DAC1_Right  : std_logic_vector (23 downto 0); 
+	signal   AD1939_Data_DAC2_Left   : std_logic_vector (23 downto 0); 
+	signal   AD1939_Data_DAC2_Right  : std_logic_vector (23 downto 0); 
+	signal   AD1939_Data_DAC3_Left   : std_logic_vector (23 downto 0); 
+	signal   AD1939_Data_DAC3_Right  : std_logic_vector (23 downto 0); 
+	signal   AD1939_Data_DAC4_Left   : std_logic_vector (23 downto 0); 
+	signal   AD1939_Data_DAC4_Right  : std_logic_vector (23 downto 0);
+
+	signal   AD1939_MCLK  : std_logic;
+	
+	signal   switches     : std_logic_vector(3 downto 0);
+
+	
+begin
+
+	Push_Button <= not KEY;  -- push button : a better description of KEY input, which should really be labelled as KEY_n
+	
+--	u3 : DebouncePulse
+--	port map (
+--		clk      	    			=> CLK_50,  -- 50 MHz clock input assumed.  If different, change input_clock_divider below to generate the 1 Mhz clock correctly
+--		push_button	            => Push_Button(0),   -- push button input will be debounced
+--		single_pulse            => single_pulse   -- pulse of 1 clock cycle sent out when push button is pressed
+--		);
+--	system_rst <= single_pulse;   
+
+--	u3 : OnePulse
+--	port map (
+--		clk      	    			=> AD1939_ADC_BCLK,  
+--		push_button	            => Push_Button(0),   
+--		single_pulse            => single_pulse   -- pulse of 1 clock cycle sent out when push button is pressed
+--		);
+--	system_rst <= single_pulse;   
+		
+	system_pll: PLL1 port map (
+		refclk   => FPGA_CLK1_50,  -- 50 MHz Reference Clock
+		rst      => not KEY(1),    -- Reset
+		outclk_0 => CLK_100,       -- 100 MHz Clock
+		outclk_1 => CLK_50,        --  50 MHz Clock
+		outclk_2 => CLK_10,        --  10 MHz Clock
+		outclk_3 => CLK_5,         --   5 MHz Clock
+		locked   => open           -- port driven high when the PLL acquires lock
+	);
+		
+	u1 : AD1939 port map (	
+		AD1939_SPI_CLK => CLK_5, 			-- system clock;  SPI Clock that must be < 10 MHz
+		reset          => not KEY(0), 	-- system reset
+		AD1939_MCLK    => AD1939_MCLK, 			-- 12.8 MHz Master Clock from AD1939 crystal
+		state_monitor  => LED(3 downto 0), -- debug
+		----------------------------------------------------------------------------------------------------------------
+		-- Signals to/from AD1939 SPI Control Port (data direction from AD1939 perspective)
+		-- 10 MHz CCLK max (see page 7 of AD1939 data sheet)
+		-- CIN data is 24-bits (see page 14 of AD1939 data sheet)
+		-- CLATCH_n must have pull-up resistor so that AD1939 recognizes presence of SPI controller on power-up
+		----------------------------------------------------------------------------------------------------------------
+		AD1939_SPI_CIN      =>  AD1939_spi_CIN,		 	-- SPI Control Data Input to AD1939 pin 30 CIN
+		AD1939_SPI_COUT     =>  AD1939_spi_COUT,     	-- SPI Control Data output from AD1939 pin 31 COUT
+		AD1939_SPI_CCLK     =>  AD1939_spi_CCLK,     	-- SPI Control Clock Input to AD1939 pin 34 CCLK
+		AD1939_SPI_CLATCH_n =>  AD1939_spi_CLATCH_n,   	-- SPI Latch for control data, input to AD1939 pin 35 CLATCH_n (active low)
+		----------------------------------------------------------------------------------------------------------------------------------------------------------------
+		-- Simple interface to read/write AD1939 register data
+		----------------------------------------------------------------------------------------------------------------------------------------------------------------
+		AD1939_Reg_Addr				=>  "00000", 		-- Address of AD1939 Register to be read/written (there are 17 registers)
+		AD1939_Reg_Write_Data		=>  "00000000", 	-- Data to be written to AD1939 Register
+		AD1939_Reg_Write_Start  	=>  '0',         	-- Initiates the register write when asserted, must be deasserted to return from busy
+		AD1939_Reg_Read_Data			=>  open, 			-- Data read from AD1939 Register
+		AD1939_Reg_Read_Start	   =>  '0',          -- Initiates the register read when asserted, must be deasserted to return from busy
+		AD1939_Reg_Read_Data_Ready	=>  open, 			-- Clock pulse signifies data read from AD1939 Register and is ready to be captured
+		AD1939_Reg_Busy	         =>  open,         -- read or write is occurring, any new read/write will be ignored 
+		-------------------------------------------------------------------------------------------------------------------------------------
+		-- Signals to/from AD1939 Serial Data Port (from ADCs/to DACs)
+		-------------------------------------------------------------------------------------------------------------------------------------
+		AD1939_ADC_SDATA1          =>  AD1939_ADC_SDATA1, 	-- Serial data from AD1939 pin 27 ASDATA1, ADC1 24-bit normal stereo serial mode
+		AD1939_ADC_SDATA2          =>  AD1939_ADC_SDATA2, 	-- Serial data from AD1939 pin 26 ASDATA2, ADC2 24-bit normal stereo serial mode
+		AD1939_ADC_BCLK            =>  AD1939_ADC_BCLK, 	-- Serial data from AD1939 pin 28 ABCLK, Bit Clock for ADCs (Master Mode)
+		AD1939_ADC_LRCLK           =>  AD1939_ADC_LRCLK, 	-- Serial data from AD1939 pin 29 ALRCLK, LR Clock for ADCs (Master Mode)
+		AD1939_DAC_SDATA1          =>  AD1939_DAC_SDATA1, 	-- Serial data to AD1939 pin 20 DSDATA1, DAC1 24-bit normal stereo serial mode
+		AD1939_DAC_SDATA2          =>  AD1939_DAC_SDATA2, 	-- Serial data to AD1939 pin 19 DSDATA2, DAC2 24-bit normal stereo serial mode
+		AD1939_DAC_SDATA3          =>  AD1939_DAC_SDATA3, 	-- Serial data to AD1939 pin 18 DSDATA3, DAC3 24-bit normal stereo serial mode
+		AD1939_DAC_SDATA4          =>  AD1939_DAC_SDATA4, 	-- Serial data to AD1939 pin 15 DSDATA4, DAC4 24-bit normal stereo serial mode
+		AD1939_DAC_BCLK            =>  AD1939_DAC_BCLK, 	-- Serial data to AD1939 pin 21 DBCLK, Bit Clock for DACs (Slave Mode)
+		AD1939_DAC_LRCLK           =>  AD1939_DAC_LRCLK,  	-- Serial data to AD1939 pin 22 DLRCLK, LR Clock for DACs (Slave Mode)
+		-----------------------------------------------------------------------------------------------------------
+		-- Interface for reading and writing AD1939 ADC/DAC (sample) 24-bit data (data is in 2's complement form)???
+		-----------------------------------------------------------------------------------------------------------
+		AD1939_Data_ADC1_Left   =>  AD1939_Data_ADC1_Left,
+		AD1939_Data_ADC1_Right  =>  AD1939_Data_ADC1_Right,
+		AD1939_Data_ADC2_Left   =>  AD1939_Data_ADC2_Left ,
+		AD1939_Data_ADC2_Right  =>  AD1939_Data_ADC2_Right,
+		AD1939_Data_ADCs_ready  =>  AD1939_Data_ADCs_ready,  -- pulse 1 BCLK period wide signifies data is ready to read from ADCs (this pulse occurs at the sample rate Fs) 	
+		AD1939_Data_DAC1_Left   =>  AD1939_Data_DAC1_Left,   -- On the rising edge of the DAC_LRCLK, these DAC signals will be captured 
+		AD1939_Data_DAC1_Right  =>  AD1939_Data_DAC1_Right,
+		AD1939_Data_DAC2_Left   =>  AD1939_Data_DAC2_Left,
+		AD1939_Data_DAC2_Right  =>  AD1939_Data_DAC2_Right,
+		AD1939_Data_DAC3_Left   =>  AD1939_Data_DAC3_Left,
+		AD1939_Data_DAC3_Right  =>  AD1939_Data_DAC3_Right,
+		AD1939_Data_DAC4_Left   =>  AD1939_Data_DAC4_Left,
+		AD1939_Data_DAC4_Right  =>  AD1939_Data_DAC4_Right
+	);
+
+	u2 : Audio_Processing port map (	
+		AD1939_MCLK    => AD1939_MCLK,
+		-----------------------------------------------------------------------------------------------------------
+		-- Abstracted data channels, i.e. interface to data plane 
+		-- Interface for reading and writing AD1939 ADC/DAC (sample) 24-bit data (data is in 2's complement form)???
+		-----------------------------------------------------------------------------------------------------------
+		-- Data from ADCs
+		AD1939_Data_ADC1_Left   => AD1939_Data_ADC1_Left,
+		AD1939_Data_ADC1_Right  => AD1939_Data_ADC1_Right,
+		AD1939_Data_ADC2_Left   => AD1939_Data_ADC2_Left,
+		AD1939_Data_ADC2_Right  => AD1939_Data_ADC2_Right,
+		AD1939_Data_ADCs_ready  => AD1939_Data_ADCs_ready,                      -- pulse 1 BCLK period wide signifies data is ready to read from input audio bus channels 	
+      --	Data to DACs	
+		AD1939_Data_DAC1_Left   => AD1939_Data_DAC1_Left,   -- On the rising edge of the DAC_LRCLK, these DAC signals will be captured 
+		AD1939_Data_DAC1_Right  => AD1939_Data_DAC1_Right,
+		AD1939_Data_DAC2_Left   => AD1939_Data_DAC2_Left,
+		AD1939_Data_DAC2_Right  => AD1939_Data_DAC2_Right,
+		AD1939_Data_DAC3_Left   => AD1939_Data_DAC3_Left,
+		AD1939_Data_DAC3_Right  => AD1939_Data_DAC3_Right,
+		AD1939_Data_DAC4_Left   => AD1939_Data_DAC4_Left,
+		AD1939_Data_DAC4_Right  => AD1939_Data_DAC4_Right
+	);
+	
+	-------------------------------------------------------------------------------------------------------------------------
+	-- SPI is connected to the GPIO 0 connector (top edge of board near power connector)
+	-------------------------------------------------------------------------------------------------------------------------
+   GPIO_1(11) <= AD1939_spi_CIN;       -- AD1939 SPI signal = mosi data to AD1939 registers    -- Eval Board J1:p8 (CDATA)
+   GPIO_1(8)  <= AD1939_spi_COUT;      -- AD1939 SPI signal = miso data from AD1939 registers  -- Eval Board J1:p5 (COUT)
+   GPIO_1(9)  <= AD1939_spi_CCLK;     -- AD1939 SPI signal = sclk: serial clock               -- Eval Board J1:p7 (CCLK)
+   GPIO_1(6)  <= AD1939_spi_CLATCH_n;  -- AD1939 SPI signal = ss_n: slave select (active low)  -- Eval Board J1:p9 (CLATCH_n)
+	
+	-------------------------------------------------------------------------------------------------------------------------
+	-- Serial data is connected to the GPIO 1 connector (bottom edge of board near push buttons)
+	-------------------------------------------------------------------------------------------------------------------------
+	AD1939_HDR1_MCLK 		<= GPIO_1(22);      		 -- Eval Board HDR1-J28:p4  (MCLK)   
+	--GPIO_1(5)  				<= AD1939_DAC_SDATA4; 	 -- Eval Board HDR1-J28:p6  (DSDATA4)  -- Serial data to AD1939 pin 15 DSDATA4, DAC4 24-bit normal stereo serial mode
+	--GPIO_1(7)  				<= AD1939_DAC_SDATA3; 	 -- Eval Board HDR1-J28:p8  (DSDATA3)  -- Serial data to AD1939 pin 18 DSDATA3, DAC3 24-bit normal stereo serial mode
+	GPIO_1(20)  			<= AD1939_DAC_SDATA2; 	 -- Eval Board HDR1-J28:p10 (DSDATA2)  -- Serial data to AD1939 pin 19 DSDATA2, DAC2 24-bit normal stereo serial mode
+	GPIO_1(21) 				<= AD1939_DAC_SDATA1; 	 -- Eval Board HDR1-J28:p12 (DSDATA1)  -- Serial data to AD1939 pin 20 DSDATA1, DAC1 24-bit normal stereo serial mode
+	GPIO_1(18) 				<= GPIO_1(12); --AD1939_DAC_BCLK; 		 -- Eval Board HDR1-J28:p14 (DBCLK) 	-- Serial data to AD1939 pin 21 DBCLK, Bit Clock for DACs (Slave Mode)
+	GPIO_1(16) 				<= GPIO_1(13); --AD1939_DAC_LRCLK;  	 -- Eval Board HDR1-J28:p16 (DLRCLK)   -- Serial data to AD1939 pin 22 DLRCLK, LR Clock for DACs (Slave Mode)
+	AD1939_ADC_SDATA2 	<= GPIO_1(14); 	 		 -- Eval Board HDR1-J28:p18 (ASDATA2)  -- Serial data from AD1939 pin 26 ASDATA2, ADC2 24-bit normal stereo serial mode
+	AD1939_ADC_SDATA1 	<= GPIO_1(15); 	 		 -- Eval Board HDR1-J28:p20 (ASDATA1)  -- Serial data from AD1939 pin 27 ASDATA1, ADC1 24-bit normal stereo serial mode   -- Eval Board HDR1-J28:p8 (CDATA)	
+	AD1939_ADC_BCLK 		<= GPIO_1(12); 		 	 -- Eval Board HDR1-J28:p22 (ABCLK) 	-- Serial data from AD1939 pin 28 ABCLK, Bit Clock for ADCs (Master Mode)
+	AD1939_ADC_LRCLK   	<= GPIO_1(13); 	    	 -- Eval Board HDR1-J28:p24 (ALRCLK)   -- Serial data from AD1939 pin 29 ALRCLK, LR Clock for ADCs (Master Mode)
+	
+	
+	
+--	GPIO_1(5)  				<= GPIO_1(19); 	 -- Eval Board HDR1-J28:p6  (DSDATA4)  -- Serial data to AD1939 pin 15 DSDATA4, DAC4 24-bit normal stereo serial mode
+--	GPIO_1(7)  				<= GPIO_1(19); 	 -- Eval Board HDR1-J28:p8  (DSDATA3)  -- Serial data to AD1939 pin 18 DSDATA3, DAC3 24-bit normal stereo serial mode
+--	GPIO_1(9)  				<= GPIO_1(17); 	 -- Eval Board HDR1-J28:p10 (DSDATA2)  -- Serial data to AD1939 pin 19 DSDATA2, DAC2 24-bit normal stereo serial mode
+--	GPIO_1(11) 				<= GPIO_1(19); 	 -- Eval Board HDR1-J28:p12 (DSDATA1)  -- Serial data to AD1939 pin 20 DSDATA1, DAC1 24-bit normal stereo serial mode
+--	GPIO_1(13) 				<= GPIO_1(21); 		 -- Eval Board HDR1-J28:p14 (DBCLK) 	-- Serial data to AD1939 pin 21 DBCLK, Bit Clock for DACs (Slave Mode)
+--	GPIO_1(15) 				<= GPIO_1(23);  	 -- Eval Board HDR1-J28:p16 (DLRCLK)   -- Serial data to AD1939 pin 22 DLRCLK, LR Clock for DACs (Slave Mode)
+	
+	
+	switches <= GPIO_1(2) & GPIO_1(3) & GPIO_1(1) & GPIO_1(0);
+	--LED(3 downto 0) <= (others => '0');
+	LED(7 downto 4) <= switches;
+	GPIO_1(23) <= '1';
+	
+	
+	
+	
+
+end architecture DE0_SOC_NoHPS_arch;

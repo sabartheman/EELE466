@@ -1,0 +1,458 @@
+----------------------------------------------------------------------------------
+-- Company:          Montana State University
+-- Author/Engineer:	 Ross Snider 
+-- 
+-- Create Date:    3/16/2017 
+-- Design Name: 
+-- Module Name:    AD1939_Qsys_DE0_Nano_dcr02  -  Qsys wrapper for AD1939 using the DE0_Nano_SoC board and target the rev 002 audio daughter card
+-- Project Name: 
+-- Target Devices: DE0-Nano-SoC
+-- Tool versions: 
+-- Description: 
+--
+-- Dependencies: 
+--
+-- Revision: 
+-- Revision 0.01 - File Created
+-- Additional Comments: 
+--
+----------------------------------------------------------------------------------
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+
+entity AD1939_Qsys_DE0_Nano_dcr02 is
+	port (
+		clk 			    	: in std_logic;   
+		reset_n 		    	: in std_logic;
+		------------------------------------------------------------
+		-- Avalon Memory Mapped Slave Signals
+		------------------------------------------------------------
+		avs_s1_address 	     : in  std_logic_vector( 2 downto 0);  -- determines number of registers
+		avs_s1_write 		     : in  std_logic;
+		avs_s1_writedata 	     : in  std_logic_vector(31 downto 0);
+		avs_s1_read 		     : in  std_logic;
+		avs_s1_readdata 	     : out std_logic_vector(31 downto 0);
+		------------------------------------------------------------
+		-- Avalon Streaming Source Signals (Channel 1-left Source from ADC)
+		------------------------------------------------------------
+		ch1_left_source_data   : out std_logic_vector(31 downto 0);  -- Data format: Signed, W=32, F=28, normalized to +=1
+      ch1_left_source_valid  : out std_logic;
+		ch1_left_source_error  : out std_logic_vector( 1 downto 0);
+		------------------------------------------------------------
+		-- Avalon Streaming Source Signals (Channel 1-right Source from ADC)
+		------------------------------------------------------------
+		ch1_right_source_data  : out std_logic_vector(31 downto 0);  -- Data format: Signed, W=32, F=28, normalized to +=1
+      ch1_right_source_valid : out std_logic;
+		ch1_right_source_error : out std_logic_vector( 1 downto 0);
+		------------------------------------------------------------
+		-- Avalon Streaming Source Signals (Channel 2-left Source from ADC)
+		------------------------------------------------------------
+		ch2_left_source_data   : out std_logic_vector(31 downto 0);  -- Data format: Signed, W=32, F=28, normalized to +=1
+      ch2_left_source_valid  : out std_logic;
+		ch2_left_source_error  : out std_logic_vector( 1 downto 0);
+		------------------------------------------------------------
+		-- Avalon Streaming Source Signals (Channel 2-right Source from ADC)
+		------------------------------------------------------------
+		ch2_right_source_data  : out std_logic_vector(31 downto 0);  -- Data format: Signed, W=32, F=28, normalized to +=1
+      ch2_right_source_valid : out std_logic;
+		ch2_right_source_error : out std_logic_vector( 1 downto 0);
+		------------------------------------------------------------
+		-- Avalon Streaming Sink Signals (Channel 1-left Sink to DAC)
+		------------------------------------------------------------
+		ch1_left_sink_data     : in  std_logic_vector(31 downto 0);  -- Data format: Signed, W=32, F=28, normalized to +=1
+      ch1_left_sink_valid    : in  std_logic;
+		ch1_left_sink_error    : in  std_logic_vector( 1 downto 0);
+		------------------------------------------------------------
+		-- Avalon Streaming Sink Signals (Channel 1-right Sink to DAC)
+		------------------------------------------------------------
+		ch1_right_sink_data    : in  std_logic_vector(31 downto 0); -- Data format: Signed, W=32, F=28, normalized to +=1
+      ch1_right_sink_valid   : in  std_logic;
+		ch1_right_sink_error   : in  std_logic_vector( 1 downto 0);
+		------------------------------------------------------------
+		-- Avalon Streaming Sink Signals (Channel 2-left Sink to DAC)
+		------------------------------------------------------------
+		ch2_left_sink_data     : in  std_logic_vector(31 downto 0);  -- Data format: Signed, W=32, F=28, normalized to +=1
+      ch2_left_sink_valid    : in  std_logic;
+		ch2_left_sink_error    : in  std_logic_vector( 1 downto 0);
+		------------------------------------------------------------
+		-- Avalon Streaming Sink Signals (Channel 2-right Sink to DAC)
+		------------------------------------------------------------
+		ch2_right_sink_data    : in  std_logic_vector(31 downto 0); -- Data format: Signed, W=32, F=28, normalized to +=1
+      ch2_right_sink_valid   : in  std_logic;
+		ch2_right_sink_error   : in  std_logic_vector( 1 downto 0);
+		------------------------------------------------------------
+		-- external conduit signals - SPI control
+		------------------------------------------------------------
+		AD1939_SPI_CIN         : out std_logic;  		 -- SPI Control Data Input to AD1939 pin 30 CIN
+		AD1939_SPI_COUT        : in  std_logic;       -- SPI Control Data output from AD1939 pin 31 COUT
+		AD1939_SPI_CCLK        : out std_logic;       -- SPI Control Clock Input to AD1939 pin 34 CCLK
+		AD1939_SPI_CLATCH_n    : out std_logic;       -- SPI Latch for control data, input to AD1939 pin 35 CLATCH_n (active low)
+		------------------------------------------------------------
+		-- external conduit signals - data (ADC & DAC)
+		------------------------------------------------------------
+		AD1939_ADC_SDATA1      : in  std_logic;   -- Serial data from AD1939 pin 27 ASDATA1, ADC1 24-bit normal stereo serial mode
+		AD1939_ADC_SDATA2      : in  std_logic;   -- Serial data from AD1939 pin 26 ASDATA2, ADC2 24-bit normal stereo serial mode
+		AD1939_ADC_BCLK        : in  std_logic;   -- Serial data from AD1939 pin 28 ABCLK, Bit Clock for ADCs (Master Mode)
+		AD1939_ADC_LRCLK       : in  std_logic;   -- Serial data from AD1939 pin 29 ALRCLK, LR Clock for ADCs (Master Mode)
+		AD1939_DAC_SDATA1      : out std_logic;   -- Serial data to AD1939 pin 20 DSDATA1, DAC1 24-bit normal stereo serial mode
+		AD1939_DAC_SDATA2      : out std_logic;   -- Serial data to AD1939 pin 19 DSDATA2, DAC2 24-bit normal stereo serial mode
+		AD1939_DAC_SDATA3      : out std_logic;   -- Serial data to AD1939 pin 18 DSDATA3, DAC3 24-bit normal stereo serial mode
+		AD1939_DAC_SDATA4      : out std_logic;   -- Serial data to AD1939 pin 15 DSDATA4, DAC4 24-bit normal stereo serial mode
+		AD1939_DAC_BCLK        : out std_logic;   -- Serial data to AD1939 pin 21 DBCLK, Bit Clock for DACs (Slave Mode)
+		AD1939_DAC_LRCLK       : out std_logic;   -- Serial data to AD1939 pin 22 DLRCLK, LR Clock for DACs (Slave Mode)
+	);
+end AD1939_Qsys_DE0_Nano_dcr02;
+
+architecture behavior of DRC_Qsys is
+
+	component AD1939 is
+		port
+		(	
+			AD1939_SPI_CLK : in  std_logic; -- SPI Clock that must be < 10 MHz
+			reset          : in  std_logic; -- system reset
+			AD1939_MCLK    : out std_logic; -- 12.8 MHz Master Clock from AD1939 crystal
+			state_monitor  : out std_logic_vector (3 downto 0);  -- debug
+			----------------------------------------------------------------------------------------------------------------
+			-- Physical Layer : signals to SPI port
+			-- Signals to/from AD1939 SPI Control Port (data direction from AD1939 perspective), connection to physical pins on AD1939
+			-- 10 MHz CCLK max (see page 7 of AD1939 data sheet)
+			-- CIN data is 24-bits (see page 14 of AD1939 data sheet)
+			-- CLATCH_n must have pull-up resistor so that AD1939 recognizes presence of SPI controller on power-up
+			----------------------------------------------------------------------------------------------------------------
+			AD1939_SPI_CIN      : out std_logic;  		 -- SPI Control Data Input to AD1939 pin 30 CIN
+			AD1939_SPI_COUT     : in  std_logic;       -- SPI Control Data output from AD1939 pin 31 COUT
+			AD1939_SPI_CCLK     : out std_logic;       -- SPI Control Clock Input to AD1939 pin 34 CCLK
+			AD1939_SPI_CLATCH_n : out std_logic;       -- SPI Latch for control data, input to AD1939 pin 35 CLATCH_n (active low)
+			-------------------------------------------------------------------------------------------------------------------------------------
+			-- Physical Layer : signals to serial data port on AD1939
+			-- Signals to/from AD1939 Serial Data Port (from ADCs/to DACs), i.e. connection to physical pins on AD1939
+			-------------------------------------------------------------------------------------------------------------------------------------
+			AD1939_ADC_SDATA1          : in     std_logic;   -- Serial data from AD1939 pin 27 ASDATA1, ADC1 24-bit normal stereo serial mode
+			AD1939_ADC_SDATA2          : in     std_logic;   -- Serial data from AD1939 pin 26 ASDATA2, ADC2 24-bit normal stereo serial mode
+			AD1939_ADC_BCLK            : in     std_logic;   -- Serial data from AD1939 pin 28 ABCLK, Bit Clock for ADCs (Master Mode)
+			AD1939_ADC_LRCLK           : in     std_logic;   -- Serial data from AD1939 pin 29 ALRCLK, LR Clock for ADCs (Master Mode)
+			--
+			AD1939_DAC_SDATA1          : out    std_logic;   -- Serial data to AD1939 pin 20 DSDATA1, DAC1 24-bit normal stereo serial mode
+			AD1939_DAC_SDATA2          : out    std_logic;   -- Serial data to AD1939 pin 19 DSDATA2, DAC2 24-bit normal stereo serial mode
+			AD1939_DAC_SDATA3          : out    std_logic;   -- Serial data to AD1939 pin 18 DSDATA3, DAC3 24-bit normal stereo serial mode
+			AD1939_DAC_SDATA4          : out    std_logic;   -- Serial data to AD1939 pin 15 DSDATA4, DAC4 24-bit normal stereo serial mode
+			AD1939_DAC_BCLK            : out    std_logic;   -- Serial data to AD1939 pin 21 DBCLK, Bit Clock for DACs (Slave Mode)
+			AD1939_DAC_LRCLK           : out    std_logic;   -- Serial data to AD1939 pin 22 DLRCLK, LR Clock for DACs (Slave Mode)
+			----------------------------------------------------------------------------------------------------------------------------------------------------------------
+			-- Abstracted register interface to AD1939
+			-- Simple interface to read/write AD1939 register data
+			----------------------------------------------------------------------------------------------------------------------------------------------------------------
+			AD1939_Reg_Addr				: in 		std_logic_vector (4 downto 0);   -- Address of AD1939 Register to be read/written (there are 17 registers)
+			AD1939_Reg_Write_Data		: in 		std_logic_vector (7 downto 0);   -- Data to be written to AD1939 Register
+			AD1939_Reg_Write_Start  	: in 		std_logic;                       -- Initiates the register write when asserted, must be deasserted to return from busy
+			AD1939_Reg_Read_Data			: out		std_logic_vector (7 downto 0);   -- Data read from AD1939 Register
+			AD1939_Reg_Read_Start	   : in 		std_logic;                       -- Initiates the register read when asserted, must be deasserted to return from busy
+			AD1939_Reg_Read_Data_Ready	: out		std_logic;   							-- Clock pulse signifies data read from AD1939 Register and is ready to be captured
+			AD1939_Reg_Busy	         : out 	std_logic;                       -- read or write is occurring, any new read/write will be ignored 
+			-----------------------------------------------------------------------------------------------------------
+			-- Abstracted data channels, i.e. interface to data plane 
+			-- Interface for reading and writing AD1939 ADC/DAC (sample) 24-bit data (data is in 2's complement form)???
+			-----------------------------------------------------------------------------------------------------------
+			-- Data from ADCs
+			AD1939_Data_ADC1_Left   : out std_logic_vector (23 downto 0); 
+			AD1939_Data_ADC1_Right  : out std_logic_vector (23 downto 0); 
+			AD1939_Data_ADC2_Left   : out std_logic_vector (23 downto 0); 
+			AD1939_Data_ADC2_Right  : out std_logic_vector (23 downto 0); 
+			AD1939_Data_ADCs_ready  : out std_logic;                        -- pulse 1 BCLK period wide signifies data is ready to read from ADCs (this pulse occurs at the sample rate Fs) 	
+			--	Data to DACs	
+			AD1939_Data_DAC1_Left   : in std_logic_vector (23 downto 0);    -- On the rising edge of the DAC_LRCLK, these DAC signals will be captured 
+			AD1939_Data_DAC1_Right  : in std_logic_vector (23 downto 0); 
+			AD1939_Data_DAC2_Left   : in std_logic_vector (23 downto 0); 
+			AD1939_Data_DAC2_Right  : in std_logic_vector (23 downto 0); 
+			AD1939_Data_DAC3_Left   : in std_logic_vector (23 downto 0); 
+			AD1939_Data_DAC3_Right  : in std_logic_vector (23 downto 0); 
+			AD1939_Data_DAC4_Left   : in std_logic_vector (23 downto 0); 
+			AD1939_Data_DAC4_Right  : in std_logic_vector (23 downto 0)
+		);
+	end component;
+
+   
+	signal reg_read         : std_logic;
+	signal reg_write        : std_logic;
+	signal reg_address      : std_logic_vector(2 downto 0);
+	signal reset            : std_logic;
+	signal data_in          : signed(31 downto 0);  
+	signal data_out         : signed(31 downto 0);  
+	
+	------------------------------------------------------------------------------
+	-- Qsys Avalon Memory Mapped Slave Registers
+	-- Data format expected: signed fixed-point with W=32 and F=28
+	------------------------------------------------------------------------------
+	constant zeros24                  : std_logic_vector(23 downto 0) := "00000000000000000000000";
+	signal reg0_compression_threshold : signed(31 downto 0) := "00000001100110011001100110011010";  -- 0.1 
+	signal reg1_gain1                 : signed(31 downto 0) := "01000000000000000000000000000000";  -- 4.0
+	signal reg2_gain2                 : signed(31 downto 0) := "00100000000000000000000000000000";  -- 2.0
+	signal reg3_exponent              : signed(31 downto 0) := "00000100110011001100110011001101";  -- 0.3
+	
+	
+	component fxpt_power_compute_W32F28 is
+		port (
+			clock	 : in  std_logic;
+			reset	 : in  std_logic;
+			x	    : in  std_logic_vector(31 downto 0);   -- x in: w = power(x,y) = x^y
+			y	    : in  std_logic_vector(31 downto 0);   -- y in: w = power(x,y) = x^y
+			start	 : in  std_logic;                       -- start computation (set to '1' for one clock period)
+			w      : out std_logic_vector(31 downto 0);   -- w in: w = power(x,y) = x^y
+			done   : out std_logic                        -- computation is done (set to '1' for one clock period)
+		);
+	end component;
+	
+	type state_type is (state_wait, state_passthrough, state_compare1_abs, state_compare2_diff, state_compare3, state_gain1, state_power_start, state_power_wait, state_gain2, state_negative, state_done);
+   signal state : state_type;
+
+   signal flag_power_start : std_logic;
+   signal flag_power_done  : std_logic;
+   signal flag_passthrough : std_logic;
+   signal flag_compression_threshold : std_logic;
+	signal data_in_abs      : unsigned(31 downto 0);
+	signal gain_result      : signed(63 downto 0);
+   signal power_result     : std_logic_vector(31 downto 0);
+   signal power_data_abs   : unsigned(31 downto 0);
+   signal power_data       : signed(31 downto 0);
+
+begin
+
+	reg_read         <= avs_s1_read;
+	reg_address      <= avs_s1_address;
+	reset            <= not reset_n;
+	
+	---------------------------------------------------
+	-- Read from AD1939 Shadow Registers
+	---------------------------------------------------
+	process(clk)
+	begin
+		if rising_edge(clk) and (reg_read = '1') then
+			case reg_address is
+				when "00000"  => avs_s1_readdata <= zeros24 & reg00_pll_ctrl0;
+				when "00001"  => avs_s1_readdata <= zeros24 & reg01_pll_ctrl1;
+				when "00010"  => avs_s1_readdata <= zeros24 & reg02_DAC_ctrl0;
+				when "00011"  => avs_s1_readdata <= zeros24 & reg03_DAC_ctrl1;
+				when "00100"  => avs_s1_readdata <= zeros24 & reg04_DAC_ctrl2;
+				when "00101"  => avs_s1_readdata <= zeros24 & reg05_DAC_mutes;
+				when "00110"  => avs_s1_readdata <= zeros24 & reg06_DAC_L1_vol;
+				when "00111"  => avs_s1_readdata <= zeros24 & reg07_DAC_R1_vol;
+				when "01000"  => avs_s1_readdata <= zeros24 & reg08_DAC_L2_vol;
+				when "01001"  => avs_s1_readdata <= zeros24 & reg09_DAC_R2_vol;
+				when "01010"  => avs_s1_readdata <= zeros24 & reg10_DAC_L3_vol;
+				when "01011"  => avs_s1_readdata <= zeros24 & reg11_DAC_R3_vol;
+				when "01100"  => avs_s1_readdata <= zeros24 & reg12_DAC_L4_vol;
+				when "01101"  => avs_s1_readdata <= zeros24 & reg13_DAC_R4_vol;
+				when "01110"  => avs_s1_readdata <= zeros24 & reg14_ADC_ctrl0;
+				when "01111"  => avs_s1_readdata <= zeros24 & reg15_ADC_ctrl1;
+				when "10000"  => avs_s1_readdata <= zeros24 & reg16_ADC_ctrl2;
+				when "10001"  => avs_s1_readdata <= zeros24 & "0000000" & read_ready_status;  -- ready = 1 when the AD1939 physical registers have been copied to the avalon shadow registers
+				when "10001"  => avs_s1_readdata <= zeros24 & "0000000" & read_write_busy;    -- busy  = 1 when a AD1939 register read/write transaction is occuring (read/writes will be ignored if busy is asserted)
+	         when others   => avs_s1_readdata <= (others => '0');  
+         end case;
+		end if;
+	end process;
+	
+	---------------------------------------------------
+	-- Control the writes to AD1939 Shadow Registers
+	---------------------------------------------------
+	process (clk)
+	begin
+		if rising_edge(clk) then
+		   if (state_monitor == "0111") and (avs_s1_writedata == '1') and (read_write_busy = '0') then 
+			   reg_write <= '1';
+				reg_data  <= avs_s1_writedata(7 downto 0);
+		   end if;
+		end if;
+	end process;
+	
+	---------------------------------------------------
+	-- Write to AD1939 Shadow Registers
+	---------------------------------------------------
+	process (clk)
+	begin
+		if rising_edge(clk) and (reg_write = '1') then
+			case reg_address is
+				when "00000"  => reg00_pll_ctrl0  <= reg_data;
+				when "00001"  => reg01_pll_ctrl1  <= reg_data;
+				when "00010"  => reg02_DAC_ctrl0  <= reg_data;
+				when "00011"  => reg03_DAC_ctrl1  <= reg_data;
+				when "00100"  => reg04_DAC_ctrl2  <= reg_data;
+				when "00101"  => reg05_DAC_mutes  <= reg_data;
+				when "00110"  => reg06_DAC_L1_vol <= reg_data;
+				when "00111"  => reg07_DAC_R1_vol <= reg_data;
+				when "01000"  => reg08_DAC_L2_vol <= reg_data;
+				when "01001"  => reg09_DAC_R2_vol <= reg_data;
+				when "01010"  => reg10_DAC_L3_vol <= reg_data;
+				when "01011"  => reg11_DAC_R3_vol <= reg_data;
+				when "01100"  => reg12_DAC_L4_vol <= reg_data;
+				when "01101"  => reg13_DAC_R4_vol <= reg_data;
+				when "01110"  => reg14_ADC_ctrl0  <= reg_data;
+				when "01111"  => reg15_ADC_ctrl1  <= reg_data;
+				when "10000"  => reg16_ADC_ctrl2  <= reg_data;
+	         when others   => -- do nothing 
+         end case;
+		end if;
+	end process;
+
+	--------------------------------------------------------------------------
+	-- Read from Avalon Stream input (Sink) and place data on output (Source)
+	--------------------------------------------------------------------------
+	process(clk)
+	begin
+		if rising_edge(clk) and (ast_sink_valid = '1') then
+			data_in         <= signed(ast_sink_data);
+		   ast_source_data <= std_logic_vector(data_out);
+		end if;
+	end process;
+	
+	--------------------------------------------------------------------------
+	-- Pass through valid and error signals
+	--------------------------------------------------------------------------	
+	ast_source_valid <= ast_sink_valid;  
+	ast_source_error <= ast_sink_error;
+   
+	--------------------------------------------------------------------------
+	-- power function
+	--------------------------------------------------------------------------	
+	power1 : fxpt_power_compute_W32F28
+		port map (
+			clock	 => clk,
+			reset	 => reset,
+			x	    => std_logic_vector(data_in_abs),
+			y	    => std_logic_vector(reg3_exponent),
+			start	 => flag_power_start,
+			w      => power_result,
+			done   => flag_power_done
+		);
+	--------------------------------------------------------------------------
+	-- Grab power function result
+	--------------------------------------------------------------------------	
+	process (clk)
+   begin
+		if rising_edge(clk) and (flag_power_done = '1') then
+			power_data_abs <= unsigned(power_result);  -- grab w=exp_power(x,y) result 
+		end if;
+   end process;
+
+	--------------------------------------------------------------------------
+	-- State machine to control computations (or passthrough)
+	-- Next state logic
+	--------------------------------------------------------------------------	
+   process (clk, reset)
+   begin
+         if reset = '1' then
+               state <= state_wait;
+         elsif (rising_edge(clk)) then
+               case state is
+                     ----------------------------------------
+                     when state_wait =>
+								if (flag_passthrough = '1') then
+									state <= state_passthrough;
+								elsif (ast_sink_valid = '1') then     -- new data has arrived
+									state <= state_compare1_abs;
+								end if;
+                     ----------------------------------------  
+                     when state_passthrough =>                -- pass through mode
+								if (flag_passthrough = '0') then
+									state <= state_wait;
+								end if;
+                     ----------------------------------------  
+                     when state_compare1_abs =>         -- compute absolute value of input data
+                        state <= state_compare2_diff;
+                     ----------------------------------------    
+                     when state_compare2_diff =>        -- compare with compression threshold
+                        state <= state_compare3;
+                     ----------------------------------------    
+                     when state_compare3 =>
+								if (flag_compression_threshold = '1') then  -- flag_compression_threshold = 1   =>   above compression threshold
+									state <= state_power_start;        -- implement power law
+								else 
+									state <= state_gain1;              -- implement simple gain when below threshold
+								end if;
+                     ----------------------------------------    
+                     when state_gain1 =>                      -- implement simple gain
+                        state <= state_done;
+                     ----------------------------------------    
+                     when state_power_start =>                -- start fixed-point power function
+                        state <= state_power_wait;
+                     ----------------------------------------    
+                     when state_power_wait =>                 -- wait until fixed-point power function finishes
+                        state <= state_negative;
+                     ----------------------------------------    
+                     when state_negative =>                   -- convert back to negative value if data_in was negative
+                        state <= state_gain2;
+                     ----------------------------------------    
+                     when state_gain2 =>                      -- implement gain2
+                        state <= state_done;
+                    ----------------------------------------    
+                     when state_done =>                       -- data to send out
+                        state <= state_wait;
+                     ----------------------------------------    
+                     when others =>
+                        state <= state_wait;
+               end case;
+         end if;
+   end process;
+	
+	--------------------------------------------------------------------------
+	-- State machine 
+	-- Perform Computations that are state dependent
+	--------------------------------------------------------------------------	
+   compute : process (clk)
+   begin
+         if (rising_edge(clk)) then
+               flag_power_start <= '0';
+               case state is
+                     ----------------------------------------
+                     when state_wait =>                       -- do nothing but wait
+                      ----------------------------------------  
+                     when state_passthrough =>                -- bypass mode - no compression - simple pass through
+                        data_out <= data_in;
+                     ----------------------------------------  
+                     when state_compare1_abs =>         -- compute absolute value of input data
+								if (data_in(31) = '1') then
+									data_in_abs <= not(unsigned(data_in)) + 1;
+								else
+									data_in_abs <= unsigned(data_in);
+								end if;
+					      ----------------------------------------    
+                     when state_compare2_diff =>        -- compare with compression threshold
+								if data_in_abs < unsigned(reg0_compression_threshold) then       
+									flag_compression_threshold <= '0';
+								else
+									flag_compression_threshold <= '1';
+								end if;
+                     ----------------------------------------    
+                     when state_compare3 =>                   -- do nothing while switching to appropriate next state
+                     ----------------------------------------    
+                     when state_gain1 =>                      -- implement simple gain
+                        gain_result <= reg1_gain1 * data_in;
+                     ----------------------------------------    
+                     when state_power_start =>                -- start fixed-point power function
+                        flag_power_start <= '1';
+                     ----------------------------------------    
+                     when state_power_wait =>                 -- do nothing but wait until fixed-point power function finishes
+                     ----------------------------------------    
+                     when state_negative =>                  -- convert back to negative value if data_in was negative
+ 								if (data_in(31) = '1') then
+									power_data <= signed(not(power_data_abs) + 1);
+								else
+									power_data <= signed(power_data_abs);
+								end if;
+                     ----------------------------------------    
+                     when state_gain2 =>                      -- implement gain2
+                        gain_result <= reg2_gain2 * power_data;
+                     ----------------------------------------    
+                     when state_done =>                       -- data to send out
+                        data_out <= gain_result(59 downto 28);
+                     ----------------------------------------    
+                     when others =>
+               end case;
+         end if;
+   end process;
+		
+end behavior;
+
+
+

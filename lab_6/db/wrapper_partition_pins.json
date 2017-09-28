@@ -1,0 +1,157 @@
+{
+	"partitions" : [
+		{
+			"name" : "Top",
+			"pins" : [
+				{
+					"name" : "avs_s1_readdata[0]",
+					"strict" : false
+				},
+				{
+					"name" : "avs_s1_readdata[1]",
+					"strict" : false
+				},
+				{
+					"name" : "avs_s1_readdata[2]",
+					"strict" : false
+				},
+				{
+					"name" : "avs_s1_readdata[3]",
+					"strict" : false
+				},
+				{
+					"name" : "avs_s1_readdata[4]",
+					"strict" : false
+				},
+				{
+					"name" : "avs_s1_readdata[5]",
+					"strict" : false
+				},
+				{
+					"name" : "avs_s1_readdata[6]",
+					"strict" : false
+				},
+				{
+					"name" : "avs_s1_readdata[7]",
+					"strict" : false
+				},
+				{
+					"name" : "FIFO_data_out[0]",
+					"strict" : false
+				},
+				{
+					"name" : "FIFO_data_out[1]",
+					"strict" : false
+				},
+				{
+					"name" : "FIFO_data_out[2]",
+					"strict" : false
+				},
+				{
+					"name" : "FIFO_data_out[3]",
+					"strict" : false
+				},
+				{
+					"name" : "FIFO_data_out[4]",
+					"strict" : false
+				},
+				{
+					"name" : "FIFO_data_out[5]",
+					"strict" : false
+				},
+				{
+					"name" : "FIFO_data_out[6]",
+					"strict" : false
+				},
+				{
+					"name" : "FIFO_data_out[7]",
+					"strict" : false
+				},
+				{
+					"name" : "FIFO_addr_out[0]",
+					"strict" : false
+				},
+				{
+					"name" : "FIFO_addr_out[1]",
+					"strict" : false
+				},
+				{
+					"name" : "FIFO_addr_out[2]",
+					"strict" : false
+				},
+				{
+					"name" : "FIFO_addr_out[3]",
+					"strict" : false
+				},
+				{
+					"name" : "FIFO_addr_out[4]",
+					"strict" : false
+				},
+				{
+					"name" : "clk",
+					"strict" : false
+				},
+				{
+					"name" : "avs_s1_address[0]",
+					"strict" : false
+				},
+				{
+					"name" : "avs_s1_address[1]",
+					"strict" : false
+				},
+				{
+					"name" : "avs_s1_address[2]",
+					"strict" : false
+				},
+				{
+					"name" : "avs_s1_address[3]",
+					"strict" : false
+				},
+				{
+					"name" : "avs_s1_address[4]",
+					"strict" : false
+				},
+				{
+					"name" : "avs_s1_read",
+					"strict" : false
+				},
+				{
+					"name" : "avs_s1_writedata[0]",
+					"strict" : false
+				},
+				{
+					"name" : "avs_s1_writedata[1]",
+					"strict" : false
+				},
+				{
+					"name" : "avs_s1_writedata[2]",
+					"strict" : false
+				},
+				{
+					"name" : "avs_s1_writedata[3]",
+					"strict" : false
+				},
+				{
+					"name" : "avs_s1_writedata[4]",
+					"strict" : false
+				},
+				{
+					"name" : "avs_s1_writedata[5]",
+					"strict" : false
+				},
+				{
+					"name" : "avs_s1_writedata[6]",
+					"strict" : false
+				},
+				{
+					"name" : "avs_s1_writedata[7]",
+					"strict" : false
+				},
+				{
+					"name" : "avs_s1_write",
+					"strict" : false
+				}
+			]
+		}
+	]
+}

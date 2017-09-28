@@ -1,0 +1,122 @@
+/*
+WARNING: Do NOT edit the input and output ports in this file in a text
+editor if you plan to continue editing the block that represents it in
+the Block Editor! File corruption is VERY likely to occur.
+*/
+/*
+Copyright (C) 1991-2016 Altera Corporation. All rights reserved.
+Your use of Altera Corporation's design tools, logic functions 
+and other software and tools, and its AMPP partner logic 
+functions, and any output files from any of the foregoing 
+(including device programming or simulation files), and any 
+associated documentation or information are expressly subject 
+to the terms and conditions of the Altera Program License 
+Subscription Agreement, the Altera Quartus Prime License Agreement,
+the Altera MegaCore Function License Agreement, or other 
+applicable license agreement, including, without limitation, 
+that your use is for the sole purpose of programming logic 
+devices manufactured by Altera and sold by Altera or its 
+authorized distributors.  Please refer to the applicable 
+agreement for further details.
+*/
+(header "symbol" (version "1.1"))
+(symbol
+	(rect 0 0 672 304)
+	(text "fifo_wrapper" (rect 299 -1 349 11)(font "Arial" (font_size 10)))
+	(text "inst" (rect 8 288 20 300)(font "Arial" ))
+	(port
+		(pt 0 72)
+		(input)
+		(text "clk_clk" (rect 0 0 27 12)(font "Arial" (font_size 8)))
+		(text "clk_clk" (rect 4 61 46 72)(font "Arial" (font_size 8)))
+		(line (pt 0 72)(pt 288 72)(line_width 1))
+	)
+	(port
+		(pt 0 112)
+		(input)
+		(text "fifo_wrapper_0_conduit_end_writebyteenable_n[3..0]" (rect 0 0 211 12)(font "Arial" (font_size 8)))
+		(text "fifo_wrapper_0_conduit_end_writebyteenable_n[3..0]" (rect 4 101 304 112)(font "Arial" (font_size 8)))
+		(line (pt 0 112)(pt 288 112)(line_width 3))
+	)
+	(port
+		(pt 0 168)
+		(input)
+		(text "fifo_wrapper_0_s1_address[4..0]" (rect 0 0 134 12)(font "Arial" (font_size 8)))
+		(text "fifo_wrapper_0_s1_address[4..0]" (rect 4 157 190 168)(font "Arial" (font_size 8)))
+		(line (pt 0 168)(pt 288 168)(line_width 3))
+	)
+	(port
+		(pt 0 184)
+		(input)
+		(text "fifo_wrapper_0_s1_write" (rect 0 0 99 12)(font "Arial" (font_size 8)))
+		(text "fifo_wrapper_0_s1_write" (rect 4 173 142 184)(font "Arial" (font_size 8)))
+		(line (pt 0 184)(pt 288 184)(line_width 1))
+	)
+	(port
+		(pt 0 200)
+		(input)
+		(text "fifo_wrapper_0_s1_writedata[31..0]" (rect 0 0 139 12)(font "Arial" (font_size 8)))
+		(text "fifo_wrapper_0_s1_writedata[31..0]" (rect 4 189 208 200)(font "Arial" (font_size 8)))
+		(line (pt 0 200)(pt 288 200)(line_width 3))
+	)
+	(port
+		(pt 0 216)
+		(input)
+		(text "fifo_wrapper_0_s1_read" (rect 0 0 99 12)(font "Arial" (font_size 8)))
+		(text "fifo_wrapper_0_s1_read" (rect 4 205 136 216)(font "Arial" (font_size 8)))
+		(line (pt 0 216)(pt 288 216)(line_width 1))
+	)
+	(port
+		(pt 0 272)
+		(input)
+		(text "reset_reset_n" (rect 0 0 56 12)(font "Arial" (font_size 8)))
+		(text "reset_reset_n" (rect 4 261 82 272)(font "Arial" (font_size 8)))
+		(line (pt 0 272)(pt 288 272)(line_width 1))
+	)
+	(port
+		(pt 0 128)
+		(output)
+		(text "fifo_wrapper_0_conduit_end_readdata[3..0]" (rect 0 0 174 12)(font "Arial" (font_size 8)))
+		(text "fifo_wrapper_0_conduit_end_readdata[3..0]" (rect 4 117 250 128)(font "Arial" (font_size 8)))
+		(line (pt 0 128)(pt 288 128)(line_width 3))
+	)
+	(port
+		(pt 0 232)
+		(output)
+		(text "fifo_wrapper_0_s1_readdata[31..0]" (rect 0 0 139 12)(font "Arial" (font_size 8)))
+		(text "fifo_wrapper_0_s1_readdata[31..0]" (rect 4 221 202 232)(font "Arial" (font_size 8)))
+		(line (pt 0 232)(pt 288 232)(line_width 3))
+	)
+	(drawing
+		(text "clk" (rect 273 43 564 99)(font "Arial" (color 128 0 0)(font_size 9)))
+		(text "clk" (rect 293 67 604 144)(font "Arial" (color 0 0 0)))
+		(text "fifo_wrapper_0_conduit_end" (rect 120 83 396 179)(font "Arial" (color 128 0 0)(font_size 9)))
+		(text "writebyteenable_n" (rect 293 107 688 224)(font "Arial" (color 0 0 0)))
+		(text "readdata" (rect 293 123 634 256)(font "Arial" (color 0 0 0)))
+		(text "fifo_wrapper_0_s1" (rect 178 139 458 291)(font "Arial" (color 128 0 0)(font_size 9)))
+		(text "address" (rect 293 163 628 336)(font "Arial" (color 0 0 0)))
+		(text "write" (rect 293 179 616 368)(font "Arial" (color 0 0 0)))
+		(text "writedata" (rect 293 195 640 400)(font "Arial" (color 0 0 0)))
+		(text "read" (rect 293 211 610 432)(font "Arial" (color 0 0 0)))
+		(text "readdata" (rect 293 227 634 464)(font "Arial" (color 0 0 0)))
+		(text "reset" (rect 259 243 548 499)(font "Arial" (color 128 0 0)(font_size 9)))
+		(text "reset_n" (rect 293 267 628 544)(font "Arial" (color 0 0 0)))
+		(text " fifo_wrapper " (rect 614 288 1312 586)(font "Arial" ))
+		(line (pt 288 32)(pt 384 32)(line_width 1))
+		(line (pt 384 32)(pt 384 288)(line_width 1))
+		(line (pt 288 288)(pt 384 288)(line_width 1))
+		(line (pt 288 32)(pt 288 288)(line_width 1))
+		(line (pt 289 52)(pt 289 76)(line_width 1))
+		(line (pt 290 52)(pt 290 76)(line_width 1))
+		(line (pt 289 92)(pt 289 132)(line_width 1))
+		(line (pt 290 92)(pt 290 132)(line_width 1))
+		(line (pt 289 148)(pt 289 236)(line_width 1))
+		(line (pt 290 148)(pt 290 236)(line_width 1))
+		(line (pt 289 252)(pt 289 276)(line_width 1))
+		(line (pt 290 252)(pt 290 276)(line_width 1))
+		(line (pt 0 0)(pt 672 0)(line_width 1))
+		(line (pt 672 0)(pt 672 304)(line_width 1))
+		(line (pt 0 304)(pt 672 304)(line_width 1))
+		(line (pt 0 0)(pt 0 304)(line_width 1))
+	)
+)

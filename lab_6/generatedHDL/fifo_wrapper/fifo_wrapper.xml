@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<deploy
+ date="2017.04.11.13:07:51"
+ outputDirectory="C:/Users/d57w762/Desktop/lab_6/generatedHDL/fifo_wrapper/">
+ <perimeter>
+  <parameter
+     name="AUTO_GENERATION_ID"
+     type="Integer"
+     defaultValue="0"
+     onHdl="0"
+     affectsHdl="1" />
+  <parameter
+     name="AUTO_UNIQUE_ID"
+     type="String"
+     defaultValue=""
+     onHdl="0"
+     affectsHdl="1" />
+  <parameter
+     name="AUTO_DEVICE_FAMILY"
+     type="String"
+     defaultValue="Cyclone V"
+     onHdl="0"
+     affectsHdl="1" />
+  <parameter
+     name="AUTO_DEVICE"
+     type="String"
+     defaultValue="5CSEMA4U23C6"
+     onHdl="0"
+     affectsHdl="1" />
+  <parameter
+     name="AUTO_DEVICE_SPEEDGRADE"
+     type="String"
+     defaultValue="6"
+     onHdl="0"
+     affectsHdl="1" />
+  <parameter
+     name="AUTO_CLK_CLOCK_RATE"
+     type="Long"
+     defaultValue="-1"
+     onHdl="0"
+     affectsHdl="1" />
+  <parameter
+     name="AUTO_CLK_CLOCK_DOMAIN"
+     type="Integer"
+     defaultValue="-1"
+     onHdl="0"
+     affectsHdl="1" />
+  <parameter
+     name="AUTO_CLK_RESET_DOMAIN"
+     type="Integer"
+     defaultValue="-1"
+     onHdl="0"
+     affectsHdl="1" />
+  <interface name="clk" kind="clock" start="0">
+   <property name="clockRate" value="50000000" />
+   <property name="externallyDriven" value="false" />
+   <property name="ptfSchematicName" value="" />
+   <port name="clk_clk" direction="input" role="clk" width="1" />
+  </interface>
+  <interface name="fifo_wrapper_0_conduit_end" kind="conduit" start="0">
+   <property name="associatedClock" value="clk" />
+   <property name="associatedReset" value="reset" />
+   <port
+       name="fifo_wrapper_0_conduit_end_writebyteenable_n"
+       direction="input"
+       role="writebyteenable_n"
+       width="4" />
+   <port
+       name="fifo_wrapper_0_conduit_end_readdata"
+       direction="output"
+       role="readdata"
+       width="4" />
+  </interface>
+  <interface name="fifo_wrapper_0_s1" kind="avalon" start="0">
+   <property name="addressAlignment" value="DYNAMIC" />
+   <property name="addressGroup" value="0" />
+   <property name="addressSpan" value="128" />
+   <property name="addressUnits" value="WORDS" />
+   <property name="alwaysBurstMaxBurst" value="false" />
+   <property name="associatedClock" value="clk" />
+   <property name="associatedReset" value="reset" />
+   <property name="bitsPerSymbol" value="8" />
+   <property name="bridgedAddressOffset" value="0" />
+   <property name="bridgesToMaster" value="" />
+   <property name="burstOnBurstBoundariesOnly" value="false" />
+   <property name="burstcountUnits" value="WORDS" />
+   <property name="constantBurstBehavior" value="false" />
+   <property name="explicitAddressSpan" value="0" />
+   <property name="holdTime" value="0" />
+   <property name="interleaveBursts" value="false" />
+   <property name="isBigEndian" value="false" />
+   <property name="isFlash" value="false" />
+   <property name="isMemoryDevice" value="false" />
+   <property name="isNonVolatileStorage" value="false" />
+   <property name="linewrapBursts" value="false" />
+   <property name="maximumPendingReadTransactions" value="0" />
+   <property name="maximumPendingWriteTransactions" value="0" />
+   <property name="minimumUninterruptedRunLength" value="1" />
+   <property name="printableDevice" value="false" />
+   <property name="readLatency" value="0" />
+   <property name="readWaitStates" value="1" />
+   <property name="readWaitTime" value="1" />
+   <property name="registerIncomingSignals" value="false" />
+   <property name="registerOutgoingSignals" value="false" />
+   <property name="setupTime" value="0" />
+   <property name="timingUnits" value="Cycles" />
+   <property name="transparentBridge" value="false" />
+   <property name="wellBehavedWaitrequest" value="false" />
+   <property name="writeLatency" value="0" />
+   <property name="writeWaitStates" value="0" />
+   <property name="writeWaitTime" value="0" />
+   <port
+       name="fifo_wrapper_0_s1_address"
+       direction="input"
+       role="address"
+       width="5" />
+   <port
+       name="fifo_wrapper_0_s1_write"
+       direction="input"
+       role="write"
+       width="1" />
+   <port
+       name="fifo_wrapper_0_s1_writedata"
+       direction="input"
+       role="writedata"
+       width="32" />
+   <port name="fifo_wrapper_0_s1_read" direction="input" role="read" width="1" />
+   <port
+       name="fifo_wrapper_0_s1_readdata"
+       direction="output"
+       role="readdata"
+       width="32" />
+  </interface>
+  <interface name="reset" kind="reset" start="0">
+   <property name="associatedClock" value="" />
+   <property name="synchronousEdges" value="NONE" />
+   <port name="reset_reset_n" direction="input" role="reset_n" width="1" />
+  </interface>
+ </perimeter>
+ <entity
+   path=""
+   parameterizationKey="fifo_wrapper:1.0:AUTO_CLK_CLOCK_DOMAIN=-1,AUTO_CLK_CLOCK_RATE=-1,AUTO_CLK_RESET_DOMAIN=-1,AUTO_DEVICE=5CSEMA4U23C6,AUTO_DEVICE_FAMILY=Cyclone V,AUTO_DEVICE_SPEEDGRADE=6,AUTO_GENERATION_ID=1491937670,AUTO_UNIQUE_ID=(clock_source:16.0:clockFrequency=50000000,clockFrequencyKnown=true,inputClockFrequency=0,resetSynchronousEdges=NONE)(fifo_wrapper:1.0:)(avalon_streaming:16.0:)(clock:16.0:)(reset:16.0:)"
+   instancePathKey="fifo_wrapper"
+   kind="fifo_wrapper"
+   version="1.0"
+   name="fifo_wrapper">
+  <parameter name="AUTO_CLK_CLOCK_RATE" value="-1" />
+  <parameter name="AUTO_GENERATION_ID" value="1491937670" />
+  <parameter name="AUTO_DEVICE" value="5CSEMA4U23C6" />
+  <parameter name="AUTO_DEVICE_FAMILY" value="Cyclone V" />
+  <parameter name="AUTO_CLK_RESET_DOMAIN" value="-1" />
+  <parameter name="AUTO_CLK_CLOCK_DOMAIN" value="-1" />
+  <parameter name="AUTO_UNIQUE_ID" value="" />
+  <parameter name="AUTO_DEVICE_SPEEDGRADE" value="6" />
+  <generatedFiles>
+   <file
+       path="C:/Users/d57w762/Desktop/lab_6/generatedHDL/fifo_wrapper/synthesis/fifo_wrapper.vhd"
+       type="VHDL" />
+  </generatedFiles>
+  <childGeneratedFiles>
+   <file
+       path="C:/Users/d57w762/Desktop/lab_6/generatedHDL/fifo_wrapper/synthesis/submodules/wrapper.vhd"
+       type="VHDL"
+       attributes="TOP_LEVEL_FILE" />
+   <file
+       path="C:/Users/d57w762/Desktop/lab_6/generatedHDL/fifo_wrapper/synthesis/submodules/altera_reset_controller.v"
+       type="VERILOG"
+       attributes="" />
+   <file
+       path="C:/Users/d57w762/Desktop/lab_6/generatedHDL/fifo_wrapper/synthesis/submodules/altera_reset_synchronizer.v"
+       type="VERILOG"
+       attributes="" />
+   <file
+       path="C:/Users/d57w762/Desktop/lab_6/generatedHDL/fifo_wrapper/synthesis/submodules/altera_reset_controller.sdc"
+       type="SDC"
+       attributes="" />
+  </childGeneratedFiles>
+  <sourceFiles>
+   <file path="C:/Users/d57w762/Desktop/lab_6/generatedHDL/fifo_wrapper.qsys" />
+  </sourceFiles>
+  <childSourceFiles>
+   <file path="C:/Users/d57w762/Desktop/lab_6/fifo_wrapper_hw.tcl" />
+   <file
+       path="C:/altera/16.0_standard/ip/altera/merlin/altera_reset_controller/altera_reset_controller_hw.tcl" />
+  </childSourceFiles>
+  <messages>
+   <message level="Debug" culprit="fifo_wrapper">queue size: 0 starting:fifo_wrapper "fifo_wrapper"</message>
+   <message level="Progress" culprit="min"></message>
+   <message level="Progress" culprit="max"></message>
+   <message level="Progress" culprit="current"></message>
+   <message level="Debug">Transform: CustomInstructionTransform</message>
+   <message level="Debug">No custom instruction connections, skipping transform </message>
+   <message level="Debug" culprit="merlin_custom_instruction_transform"><![CDATA[After transform: <b>2</b> modules, <b>3</b> connections]]></message>
+   <message level="Debug">Transform: MMTransform</message>
+   <message level="Debug">Transform: InterruptMapperTransform</message>
+   <message level="Debug">Transform: InterruptSyncTransform</message>
+   <message level="Debug">Transform: InterruptFanoutTransform</message>
+   <message level="Debug">Transform: AvalonStreamingTransform</message>
+   <message level="Debug">Transform: ResetAdaptation</message>
+   <message level="Progress" culprit="min"></message>
+   <message level="Progress" culprit="max"></message>
+   <message level="Progress" culprit="current"></message>
+   <message level="Debug" culprit="reset_adaptation_transform"><![CDATA[After transform: <b>3</b> modules, <b>5</b> connections]]></message>
+   <message level="Debug" culprit="fifo_wrapper"><![CDATA["<b>fifo_wrapper</b>" reuses <b>fifo_wrapper</b> "<b>submodules/wrapper</b>"]]></message>
+   <message level="Debug" culprit="fifo_wrapper"><![CDATA["<b>fifo_wrapper</b>" reuses <b>altera_reset_controller</b> "<b>submodules/altera_reset_controller</b>"]]></message>
+   <message level="Debug" culprit="fifo_wrapper">queue size: 1 starting:fifo_wrapper "submodules/wrapper"</message>
+   <message level="Info" culprit="fifo_wrapper_0"><![CDATA["<b>fifo_wrapper</b>" instantiated <b>fifo_wrapper</b> "<b>fifo_wrapper_0</b>"]]></message>
+   <message level="Debug" culprit="fifo_wrapper">queue size: 0 starting:altera_reset_controller "submodules/altera_reset_controller"</message>
+   <message level="Info" culprit="rst_controller"><![CDATA["<b>fifo_wrapper</b>" instantiated <b>altera_reset_controller</b> "<b>rst_controller</b>"]]></message>
+  </messages>
+ </entity>
+ <entity
+   path="submodules/"
+   parameterizationKey="fifo_wrapper:1.0:"
+   instancePathKey="fifo_wrapper:.:fifo_wrapper_0"
+   kind="fifo_wrapper"
+   version="1.0"
+   name="wrapper">
+  <generatedFiles>
+   <file
+       path="C:/Users/d57w762/Desktop/lab_6/generatedHDL/fifo_wrapper/synthesis/submodules/wrapper.vhd"
+       type="VHDL"
+       attributes="TOP_LEVEL_FILE" />
+  </generatedFiles>
+  <childGeneratedFiles/>
+  <sourceFiles>
+   <file path="C:/Users/d57w762/Desktop/lab_6/fifo_wrapper_hw.tcl" />
+  </sourceFiles>
+  <childSourceFiles/>
+  <instantiator instantiator="fifo_wrapper" as="fifo_wrapper_0" />
+  <messages>
+   <message level="Debug" culprit="fifo_wrapper">queue size: 1 starting:fifo_wrapper "submodules/wrapper"</message>
+   <message level="Info" culprit="fifo_wrapper_0"><![CDATA["<b>fifo_wrapper</b>" instantiated <b>fifo_wrapper</b> "<b>fifo_wrapper_0</b>"]]></message>
+  </messages>
+ </entity>
+ <entity
+   path="submodules/"
+   parameterizationKey="altera_reset_controller:16.0:ADAPT_RESET_REQUEST=0,MIN_RST_ASSERTION_TIME=3,NUM_RESET_INPUTS=1,OUTPUT_RESET_SYNC_EDGES=deassert,RESET_REQUEST_PRESENT=0,RESET_REQ_EARLY_DSRT_TIME=1,RESET_REQ_WAIT_TIME=1,SYNC_DEPTH=2,USE_RESET_REQUEST_IN0=0,USE_RESET_REQUEST_IN1=0,USE_RESET_REQUEST_IN10=0,USE_RESET_REQUEST_IN11=0,USE_RESET_REQUEST_IN12=0,USE_RESET_REQUEST_IN13=0,USE_RESET_REQUEST_IN14=0,USE_RESET_REQUEST_IN15=0,USE_RESET_REQUEST_IN2=0,USE_RESET_REQUEST_IN3=0,USE_RESET_REQUEST_IN4=0,USE_RESET_REQUEST_IN5=0,USE_RESET_REQUEST_IN6=0,USE_RESET_REQUEST_IN7=0,USE_RESET_REQUEST_IN8=0,USE_RESET_REQUEST_IN9=0,USE_RESET_REQUEST_INPUT=0"
+   instancePathKey="fifo_wrapper:.:rst_controller"
+   kind="altera_reset_controller"
+   version="16.0"
+   name="altera_reset_controller">
+  <generatedFiles>
+   <file
+       path="C:/Users/d57w762/Desktop/lab_6/generatedHDL/fifo_wrapper/synthesis/submodules/altera_reset_controller.v"
+       type="VERILOG"
+       attributes="" />
+   <file
+       path="C:/Users/d57w762/Desktop/lab_6/generatedHDL/fifo_wrapper/synthesis/submodules/altera_reset_synchronizer.v"
+       type="VERILOG"
+       attributes="" />
+   <file
+       path="C:/Users/d57w762/Desktop/lab_6/generatedHDL/fifo_wrapper/synthesis/submodules/altera_reset_controller.sdc"
+       type="SDC"
+       attributes="" />
+  </generatedFiles>
+  <childGeneratedFiles/>
+  <sourceFiles>
+   <file
+       path="C:/altera/16.0_standard/ip/altera/merlin/altera_reset_controller/altera_reset_controller_hw.tcl" />
+  </sourceFiles>
+  <childSourceFiles/>
+  <instantiator instantiator="fifo_wrapper" as="rst_controller" />
+  <messages>
+   <message level="Debug" culprit="fifo_wrapper">queue size: 0 starting:altera_reset_controller "submodules/altera_reset_controller"</message>
+   <message level="Info" culprit="rst_controller"><![CDATA["<b>fifo_wrapper</b>" instantiated <b>altera_reset_controller</b> "<b>rst_controller</b>"]]></message>
+  </messages>
+ </entity>
+</deploy>
